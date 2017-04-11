@@ -24,14 +24,14 @@ function init()
 
     // start the menu
     menu = new Menu();
-    enemy1 = new Enemy(400, 500, 600);
+    //enemy1 = new Enemy(400, 500, 600);
 
 }
 
 
 function update(event) {
 
-	enemy1.move();
+	//enemy1.move();
 
     stage.update();
 }
