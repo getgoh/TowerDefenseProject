@@ -58,9 +58,16 @@ Menu.prototype.drawButtons = function()
  	this.exitBtn.y = this.optionsBtn.y + 60;
 
  	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	this.instructionsBtn.on("click", function(e) { stage.removeAllChildren(); s1 = new Stage1(); });
+ 	this.instructionsBtn.on("click", this.startGame);
  	this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
  	this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
+}
+
+Menu.prototype.startGame = function()
+{
+	stage.removeAllChildren(); 
+	s1 = new Stage1();
+	drawDashboard();
 }

@@ -26,33 +26,41 @@ Enemy.prototype.setDestinations = function()
 		{x: 400, y: 150}, 
 		{x:  10, y: 150},
 		{x:  10, y: 300},
-		{x: 400, y: 300} ];
+		{x: 550, y: 300},
+		{x: 550, y: 10} ];
 }
 
 Enemy.prototype.draw = function()
 {
-	this.txtTitle = new createjs.Text("E", "50px Arial", "#ff7700");
+	this.currEnemy = new createjs.Bitmap("../images/monster1.png");
+	this.currEnemy.scaleX = 0.1;
+	this.currEnemy.scaleY = 0.1;
+	this.currEnemy.x = this.startX;
+    this.currEnemy.y = this.startY;
+    stage.addChild(this.currEnemy);
 
-    this.txtTitle.textAlign = 'center';
-    this.txtTitle.textBaseline = 'middle';
-    this.txtTitle.x = this.startX;
-    this.txtTitle.y = this.startY;
+	// this.txtTitle = new createjs.Text("E", "50px Arial", "#ff7700");
 
-    stage.addChild(this.txtTitle);
+ //    this.txtTitle.textAlign = 'center';
+ //    this.txtTitle.textBaseline = 'middle';
+ //    this.txtTitle.x = this.startX;
+ //    this.txtTitle.y = this.startY;
+
+ //    stage.addChild(this.txtTitle);
 }
 
 var isPositiveX, isPositiveY;
 
 Enemy.prototype.move = function()
 {
-	isPositiveX = (this.destinations[this.currDest].x - this.txtTitle.x) > 0 ? true : false;
-	isPositiveY = (this.destinations[this.currDest].y - this.txtTitle.y) > 0 ? true : false;
+	isPositiveX = (this.destinations[this.currDest].x - this.currEnemy.x) > 0 ? true : false;
+	isPositiveY = (this.destinations[this.currDest].y - this.currEnemy.y) > 0 ? true : false;
 
-	this.txtTitle.x = isPositiveX ? this.txtTitle.x + this.speed : this.txtTitle.x - this.speed;
-	this.txtTitle.y = isPositiveY ? this.txtTitle.y + this.speed : this.txtTitle.y - this.speed;
+	this.currEnemy.x = isPositiveX ? this.currEnemy.x + this.speed : this.currEnemy.x - this.speed;
+	this.currEnemy.y = isPositiveY ? this.currEnemy.y + this.speed : this.currEnemy.y - this.speed;
 
 
-	if(this.txtTitle.x == this.destinations[this.currDest].x && this.txtTitle.y == this.destinations[this.currDest].y)
+	if(this.currEnemy.x == this.destinations[this.currDest].x && this.currEnemy.y == this.destinations[this.currDest].y)
 	{
 		this.currDest++;
 	}
@@ -60,6 +68,6 @@ Enemy.prototype.move = function()
 	if(this.destinations[this.currDest] == null)
 	{
 		enemies.splice(0, 1);
-		stage.removeChild(this.txtTitle);
+		stage.removeChild(this.currEnemy);
 	}
 }

@@ -23,7 +23,7 @@ Stage1.prototype.setCanvasSize = function()
 Stage1.prototype.spawnEnemies = function() {
 	for(var x=1;x<=10;x++)
 	{
-		var enemy = new Enemy((x * (-30)), 40);
+		var enemy = new Enemy((x * (-80)), 40);
 		//stage.addChild(enemy);
 		enemies.push(enemy);
 		window.enemies = enemies;

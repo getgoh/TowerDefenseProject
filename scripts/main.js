@@ -12,6 +12,9 @@ var holder;
 // menu
 var menu;
 var enemies = [];
+var towers = [];
+
+var menuTower1, menuTower2;
 
 var s1;
 
@@ -29,6 +32,11 @@ function init()
     window.enemies = enemies;
     // enemy1 = new Enemy(400, 500, 600);
 
+}
+
+function drawDashboard()
+{
+    menuTower1 = new MenuTower(1);
 }
 
 
