@@ -1,37 +1,50 @@
 
 
-var Menu = function()
+var Stage1 = function()
 {
 	this.initialize();
 }
 
-Menu.prototype.initialize = function()
+Stage1.prototype.initialize = function()
 {
-	this.setCanvasSize();
-	this.drawText();
-	this.drawButtons();
+	// this.setCanvasSize();
+	// this.drawText();
+	this.spawnEnemies();
+	//this.drawButtons();
 }
 
-Menu.prototype.setCanvasSize = function()
+Stage1.prototype.setCanvasSize = function()
 {
 	canvas.width = 600;
 	canvas.height = 400;
 	holder.style.width = "600px";
 }
 
-Menu.prototype.drawText = function()
+Stage1.prototype.spawnEnemies = function() {
+	for(var x=1;x<=10;x++)
+	{
+		var enemy = new Enemy((x * (-30)), 40);
+		//stage.addChild(enemy);
+		enemies.push(enemy);
+		window.enemies = enemies;
+	}
+
+
+};
+
+Stage1.prototype.drawText = function()
 {
-	this.txtTitle = new createjs.Text("Tower PewPew", "50px Arial", "#ff7700");
+	this.txtTitle = new createjs.Text("Stage 1", "20px Arial", "#ff7700");
 
     this.txtTitle.textAlign = 'center';
     this.txtTitle.textBaseline = 'middle';
     this.txtTitle.x = stage.canvas.width/2;
-    this.txtTitle.y = stage.canvas.height/2 - 60;
+    this.txtTitle.y = stage.canvas.height/8;
 
     stage.addChild(this.txtTitle);
 }
 
-Menu.prototype.drawButtons = function()
+Stage1.prototype.drawButtons = function()
 {
 	// start game button
  	this.gameBtn = new createjs.Bitmap("../images/btnStart.png");
@@ -58,7 +71,7 @@ Menu.prototype.drawButtons = function()
  	this.exitBtn.y = this.optionsBtn.y + 60;
 
  	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	this.instructionsBtn.on("click", function(e) { stage.removeAllChildren(); s1 = new Stage1(); });
+ 	this.instructionsBtn.on("click", function(e) { alert('Show help page!!'); });
  	this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
  	this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
 

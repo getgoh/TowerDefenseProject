@@ -11,7 +11,9 @@ var holder;
 
 // menu
 var menu;
-var enemy1;
+var enemies = [];
+
+var s1;
 
 function init()
 {
@@ -19,19 +21,26 @@ function init()
     holder = document.getElementById('holder');
     stage = new createjs.Stage(canvas);
     stage.enableMouseOver(10);
-    createjs.Ticker.setFPS(60);
+    createjs.Ticker.setFPS(120);
     createjs.Ticker.on("tick", update);
 
     // start the menu
     menu = new Menu();
-    //enemy1 = new Enemy(400, 500, 600);
+    window.enemies = enemies;
+    // enemy1 = new Enemy(400, 500, 600);
 
 }
 
 
 function update(event) {
 
-	//enemy1.move();
+	// enemy1.move();
+
+    for(var x = 1; x < enemies.length; x++)
+    {
+        //console.log(enemies[x]);
+        enemies[x].move();
+    }
 
     stage.update();
 }
