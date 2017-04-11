@@ -9,6 +9,7 @@ Stage1.prototype.initialize = function()
 {
 	// this.setCanvasSize();
 	// this.drawText();
+	this.drawMap();
 	this.spawnEnemies();
 	//this.drawButtons();
 }
@@ -31,6 +32,31 @@ Stage1.prototype.spawnEnemies = function() {
 
 
 };
+
+Stage1.prototype.drawMap = function()
+{
+	this.enemyPath = new createjs.Shape();
+	this.enemyPath.graphics.setStrokeStyle(45);
+	this.enemyPath.graphics.beginStroke("#4286f4");
+
+
+	this.pathPoints = [ 
+		{x: 400, y: 40}, 
+		{x: 400, y: 150}, 
+		{x:  10, y: 150},
+		{x:  10, y: 300},
+		{x: 550, y: 300},
+		{x: 550, y: 10} ];
+
+	this.enemyPath.graphics.moveTo(-20, 70);
+
+	for(var p = 0; p < this.pathPoints.length; p++)
+	{
+		this.enemyPath.graphics.lineTo(this.pathPoints[p].x + 30, this.pathPoints[p].y + 30);
+	}
+
+	stage.addChild(this.enemyPath);
+}
 
 Stage1.prototype.drawText = function()
 {
