@@ -24,7 +24,7 @@ Stage1.prototype.setCanvasSize = function()
 Stage1.prototype.spawnEnemies = function() {
 	for(var x=1;x<=10;x++)
 	{
-		var enemy = new Enemy((x * (-80)), 40);
+		var enemy = new Enemy((x * (-72)), 48);
 		//stage.addChild(enemy);
 		enemies.push(enemy);
 		window.enemies = enemies;
@@ -41,18 +41,18 @@ Stage1.prototype.drawMap = function()
 
 
 	this.pathPoints = [ 
-		{x: 400, y: 40}, 
-		{x: 400, y: 150}, 
-		{x:  10, y: 150},
-		{x:  10, y: 300},
-		{x: 550, y: 300},
-		{x: 550, y: 10} ];
+		{x: 384, y: 48}, 
+		{x: 384, y: 144}, 
+		{x:  48, y: 144},
+		{x:  48, y: 288},
+		{x: 528, y: 288},
+		{x: 528, y: 48} ];
 
-	this.enemyPath.graphics.moveTo(-20, 70);
+	this.enemyPath.graphics.moveTo(-48, 48 + 24);
 
 	for(var p = 0; p < this.pathPoints.length; p++)
 	{
-		this.enemyPath.graphics.lineTo(this.pathPoints[p].x + 30, this.pathPoints[p].y + 30);
+		this.enemyPath.graphics.lineTo(this.pathPoints[p].x + 24, this.pathPoints[p].y + 24);
 	}
 
 	stage.addChild(this.enemyPath);

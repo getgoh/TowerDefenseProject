@@ -21,20 +21,29 @@ Enemy.prototype.initialize = function()
 
 Enemy.prototype.setDestinations = function()
 {
-	this.destinations = [ 
-		{x: 400, y: 40}, 
-		{x: 400, y: 150}, 
-		{x:  10, y: 150},
-		{x:  10, y: 300},
-		{x: 550, y: 300},
-		{x: 550, y: 10} ];
+	// this.destinations = [ 
+	// 	{x: 400, y: 40}, 
+	// 	{x: 400, y: 150}, 
+	// 	{x:  10, y: 150},
+	// 	{x:  10, y: 300},
+	// 	{x: 550, y: 300},
+	// 	{x: 550, y: 10} ];
+
+		this.destinations = [ 
+		{x: 384, y: 48}, 
+		{x: 384, y: 144}, 
+		{x:  48, y: 144},
+		{x:  48, y: 288},
+		{x: 528, y: 288},
+		{x: 528, y: 48} ];
 }
 
 Enemy.prototype.draw = function()
 {
 	this.currEnemy = new createjs.Bitmap("../images/monster1.png");
-	this.currEnemy.scaleX = 0.1;
-	this.currEnemy.scaleY = 0.1;
+	var scaleNum = 48/512;
+	this.currEnemy.scaleX = scaleNum;
+	this.currEnemy.scaleY = scaleNum;
 	this.currEnemy.x = this.startX;
     this.currEnemy.y = this.startY;
     stage.addChild(this.currEnemy);

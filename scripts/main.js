@@ -1,8 +1,13 @@
 
 // Globals
 
+// 20 x 10 (48px per 'cell')
+
 var canvasWidth = 960;
 var canvasHeight = 480;
+
+var cellWidth = 48;
+var cellHeight = 48;
 
 var canvas;
 var stage;
