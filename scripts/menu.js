@@ -7,7 +7,7 @@ var Menu = function()
 
 Menu.prototype.initialize = function()
 {
-	this.setCanvasSize();
+	//this.setCanvasSize();
 	this.drawText();
 	this.drawButtons();
 }
@@ -68,6 +68,6 @@ Menu.prototype.drawButtons = function()
 Menu.prototype.startGame = function()
 {
 	stage.removeAllChildren(); 
-	s1 = new Stage1();
+	stage1 = new Stage1();
 	drawDashboard();
 }

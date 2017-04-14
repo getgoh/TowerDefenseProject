@@ -16,12 +16,13 @@ var holder;
 
 // menu
 var menu;
+
 var enemies = [];
 var towers = [];
+var stage1;
 
 var menuTower1, menuTower2;
 
-var s1;
 
 function init()
 {
@@ -29,7 +30,7 @@ function init()
     holder = document.getElementById('holder');
     stage = new createjs.Stage(canvas);
     stage.enableMouseOver(10);
-    createjs.Ticker.setFPS(120);
+    createjs.Ticker.setFPS(60);
     createjs.Ticker.on("tick", update);
 
     // start the menu

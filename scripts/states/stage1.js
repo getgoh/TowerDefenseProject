@@ -9,6 +9,7 @@ Stage1.prototype.initialize = function()
 {
 	// this.setCanvasSize();
 	// this.drawText();
+	this.setTable();
 	this.drawMap();
 	this.spawnEnemies();
 	//this.drawButtons();
@@ -33,6 +34,26 @@ Stage1.prototype.spawnEnemies = function() {
 
 };
 
+Stage1.prototype.setTable = function()
+{
+	// 15 x 10
+	this.gameTable = [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]];
+
+
+		console.log("gt:" + this.gameTable[0][0]);
+
+		window.gt = this.gameTable;
+}
+
 Stage1.prototype.drawMap = function()
 {
 	this.enemyPath = new createjs.Shape();
@@ -52,6 +73,18 @@ Stage1.prototype.drawMap = function()
 
 	for(var p = 0; p < this.pathPoints.length; p++)
 	{
+		// console.log("gt:" + this.gameTable);
+
+		var rowNum = Math.floor(this.pathPoints[p].y / 48);
+		var colNum = Math.floor(this.pathPoints[p].x / 48);
+
+		// var rowNum = ix * 48;
+		// var colNum = iy * 48;
+
+		console.log("x:" + colNum + ", y:" + rowNum);
+
+		this.gameTable[rowNum][colNum] = 9;
+
 		this.enemyPath.graphics.lineTo(this.pathPoints[p].x + 24, this.pathPoints[p].y + 24);
 	}
 
