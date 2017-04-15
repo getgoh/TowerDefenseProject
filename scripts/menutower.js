@@ -1,6 +1,8 @@
-	
-var _tower;
+/*
 
+*/
+
+// constructor
 var MenuTower = function(type)
 {
 	this.type = type;
@@ -10,45 +12,58 @@ var MenuTower = function(type)
 	this.initialize();
 }
 
+// init function
 MenuTower.prototype.initialize = function()
 {
-	this.draw();
+    this.draw();
 }
 
+//
 MenuTower.prototype.draw = function()
-{	
+{
+    switch (this.type) {
+        case 1:
+            this.menuTower = new createjs.Bitmap(queue.getResult("imgt1"));
+            break;
+        case 2:
+            this.menuTower = new createjs.Bitmap(queue.getResult("imgt2"));
+            break;
+        case 3:
+            this.menuTower = new createjs.Bitmap(queue.getResult("imgt3"));
+            break;
+    }
+
     // 73 x 65
     // 182.5 x 162.5
     // original = 365 x 325
-    this.menuTower = new createjs.Bitmap("../images/tower1.png");
-    var scaleNum = 48/365;
+    var scaleNum = 48 / 365;
     this.menuTower.scaleX = scaleNum;
     this.menuTower.scaleY = scaleNum;
     this.menuTower.y = 9 * 48;
     this.menuTower.x = 0;
 
-	
 
 
-	this.placeHelper = new createjs.Shape();
-	this.cmd = this.placeHelper.graphics.beginFill("#107727").command;
-	this.placeHelper.graphics.drawRect(0, 0, 48, 48);
-	this.placeHelper.alpha = 0.01;
 
-	// _tower.fillObj = new createjs.Graphics.Fill("#107727");
-	// this.placeHelper.graphics.append(fillOjb);
+    this.placeHelper = new createjs.Shape();
+    this.cmd = this.placeHelper.graphics.beginFill("#107727").command;
+    this.placeHelper.graphics.drawRect(0, 0, 48, 48);
+    this.placeHelper.alpha = 0.01;
+
+    // _tower.fillObj = new createjs.Graphics.Fill("#107727");
+    // this.placeHelper.graphics.append(fillOjb);
 
 
-	_tower.previewTower = new createjs.Bitmap("../images/tower1.png");
+    _tower.previewTower = new createjs.Bitmap(queue.getResult("imgt1"));
 
     _tower.previewTower.scaleX = scaleNum;
     _tower.previewTower.scaleY = scaleNum;
-	_tower.previewTower.y = 9 * 48;
-	_tower.previewTower.x = 0;
-	_tower.previewTower.towerType = 1;
+    _tower.previewTower.y = 9 * 48;
+    _tower.previewTower.x = 0;
+    _tower.previewTower.towerType = 1;
 
 
-	_tower.previewTower.on("mousedown", this.onMouseDown);
+    _tower.previewTower.on("mousedown", this.onMouseDown);
     _tower.previewTower.on("pressmove", this.onDragged);
     _tower.previewTower.on("pressup", this.onRelease);
 

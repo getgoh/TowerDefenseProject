@@ -40,7 +40,7 @@ Enemy.prototype.setDestinations = function()
 
 Enemy.prototype.draw = function()
 {
-	this.currEnemy = new createjs.Bitmap("../images/monster1.png");
+	this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
 	var scaleNum = 48/512;
 	this.currEnemy.scaleX = scaleNum;
 	this.currEnemy.scaleY = scaleNum;
