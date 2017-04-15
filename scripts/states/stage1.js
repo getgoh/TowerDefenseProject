@@ -1,6 +1,8 @@
+/*
 
-var enemyCount = 10;
+*/
 
+//
 var Stage1 = function()
 {
 	this.initialize();
