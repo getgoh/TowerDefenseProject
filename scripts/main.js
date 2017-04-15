@@ -23,6 +23,9 @@ var stage1;
 
 var menuTower1, menuTower2;
 
+// moolah
+var credit = 500;
+var creditTxt;
 
 //queue
 var queue;
@@ -31,6 +34,9 @@ var queue;
 var loadingBarContainer;
 var loadingBar;
 
+// music stuff
+var shouldPlayThemeMusic = true;
+var themeMusicCtr;
 
 function init()
 {
@@ -42,8 +48,8 @@ function init()
     createjs.Ticker.on("tick", update);
 
     // start the menu
-    menu = new Menu();
-    window.enemies = enemies;
+    //menu = new Menu();
+    // window.enemies = enemies;
     // enemy1 = new Enemy(400, 500, 600);
 
     
@@ -55,6 +61,11 @@ function init()
 function drawDashboard()
 {
     menuTower1 = new MenuTower(1);
+    creditTxt = new createjs.Text("Credit: " + credit, "20px Arial");
+    creditTxt.x = menuTower1.x;
+    creditTxt.y = menuTower1.y + 48;
+
+    stage.addChild(creditTxt);
 }
 
 
@@ -105,7 +116,15 @@ function preloader()
     queue.installPlugin(createjs.Sound);
     queue.addEventListener("complete", finishBar);
     queue.addEventListener("progress", updateBar);
-    queue.addEventListener("complete", themeMusic);
+
+    // after pre-load is complete, call themeMusicStart function, which will play the theme music
+    queue.addEventListener("complete", themeMusicStart);
+
+    // pre-load sound files
+    createjs.Sound.alternateExtensions = ["mp3"];
+    queue.loadFile({id: "theme", src: "sounds/opening.mp3"},
+                   {id: "gameTheme", src: "sounds/game.mp3"});
+
 
     queue.loadManifest([
         { id: "imgStart", src: "images/btnStart.png" },
@@ -114,10 +133,10 @@ function preloader()
         { id: "imgExit", src: "images/btnExit.png" },
         { id: "imgMenu", src: "images/btnMenu.png" },
         { id: "imgSounds", src: "images/btnSounds.png" },
-        { id: "imgMusic", src: "images/btnMusic.png" },
-        { id: "openTheme", src: "sounds/opening.mp3" },
-        { id: "gameTheme", src: "sounds/game.mp3" }
+        { id: "imgMusic", src: "images/btnMusic.png" }
     ]);
+
+    
 }
 
 function updateBar()

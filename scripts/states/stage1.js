@@ -1,4 +1,5 @@
 
+var enemyCount = 10;
 
 var Stage1 = function()
 {
@@ -7,14 +8,13 @@ var Stage1 = function()
 
 Stage1.prototype.initialize = function()
 {
-	// this.setCanvasSize();
-	// this.drawText();
 	this.setTable();
 	this.drawMap();
 	this.spawnEnemies();
-	//this.drawButtons();
 }
 
+// Current not in use, but leaving here
+// in case we need it in the future
 Stage1.prototype.setCanvasSize = function()
 {
 	canvas.width = 600;
@@ -23,12 +23,11 @@ Stage1.prototype.setCanvasSize = function()
 }
 
 Stage1.prototype.spawnEnemies = function() {
-	for(var x=1;x<=10;x++)
+
+	for(var x = 1; x <= enemyCount ; x++)
 	{
-		var enemy = new Enemy((x * (-72)), 48);
-		//stage.addChild(enemy);
+		var enemy = new Enemy((x * (-72)), cellWidth);
 		enemies.push(enemy);
-		window.enemies = enemies;
 	}
 
 
@@ -36,22 +35,25 @@ Stage1.prototype.spawnEnemies = function() {
 
 Stage1.prototype.setTable = function()
 {
-	// 15 x 10
-	this.gameTable = [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]];
+	// size: 15 x 10
+	// 0 = placeable cell
+	// 9 = path
+	// 5 = out of bounds
+	this.gameTable = [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5 ],
+					   [ 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 9, 0, 5, 5 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9, 0, 5, 5 ],
+					   [ 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 9, 0, 5, 5 ],
+					   [ 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 5, 5 ],
+					   [ 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 5, 5 ],
+					   [ 0, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 5, 5 ],
+					   [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5 ],
+					   [ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ],
+					   [ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ]];
 
 
-		console.log("gt:" + this.gameTable[0][0]);
+		// console.log("gt:" + this.gameTable[0][0]);
 
-		window.gt = this.gameTable;
+		// window.gt = this.gameTable;
 }
 
 Stage1.prototype.drawMap = function()
@@ -60,7 +62,8 @@ Stage1.prototype.drawMap = function()
 	this.enemyPath.graphics.setStrokeStyle(45);
 	this.enemyPath.graphics.beginStroke("#4286f4");
 
-
+	// define and draw the path
+	// *this is for visual purposes only*
 	this.pathPoints = [ 
 		{x: 384, y: 48}, 
 		{x: 384, y: 144}, 
@@ -73,17 +76,12 @@ Stage1.prototype.drawMap = function()
 
 	for(var p = 0; p < this.pathPoints.length; p++)
 	{
-		// console.log("gt:" + this.gameTable);
+		// var rowNum = Math.floor(this.pathPoints[p].y / 48);
+		// var colNum = Math.floor(this.pathPoints[p].x / 48);
 
-		var rowNum = Math.floor(this.pathPoints[p].y / 48);
-		var colNum = Math.floor(this.pathPoints[p].x / 48);
+		// console.log("x:" + colNum + ", y:" + rowNum);
 
-		// var rowNum = ix * 48;
-		// var colNum = iy * 48;
-
-		console.log("x:" + colNum + ", y:" + rowNum);
-
-		this.gameTable[rowNum][colNum] = 9;
+		//this.gameTable[rowNum][colNum] = 9;
 
 		this.enemyPath.graphics.lineTo(this.pathPoints[p].x + 24, this.pathPoints[p].y + 24);
 	}
@@ -101,38 +99,4 @@ Stage1.prototype.drawText = function()
     this.txtTitle.y = stage.canvas.height/8;
 
     stage.addChild(this.txtTitle);
-}
-
-Stage1.prototype.drawButtons = function()
-{
-	// start game button
- 	this.gameBtn = new createjs.Bitmap("../images/btnStart.png");
- 	this.gameBtn.cursor = "pointer";
- 	this.gameBtn.x = this.txtTitle.x - 190;
- 	this.gameBtn.y = this.txtTitle.y + 50;
-
- 	// instructions button
- 	this.instructionsBtn = new createjs.Bitmap("../images/btnInstructions.png");
- 	this.instructionsBtn.cursor = "pointer";
- 	this.instructionsBtn.x = this.txtTitle.x - 194;
- 	this.instructionsBtn.y = this.gameBtn.y + 60;
-
- 	// options button
- 	this.optionsBtn = new createjs.Bitmap("../images/btnOptions.png");
- 	this.optionsBtn.cursor = "pointer";
- 	this.optionsBtn.x = this.txtTitle.x + 34;
- 	this.optionsBtn.y = this.txtTitle.y + 50;
-
- 	// exit button
- 	this.exitBtn = new createjs.Bitmap("../images/btnExit.png");
- 	this.exitBtn.cursor = "pointer";
- 	this.exitBtn.x = this.txtTitle.x + 34;
- 	this.exitBtn.y = this.optionsBtn.y + 60;
-
- 	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	this.instructionsBtn.on("click", function(e) { alert('Show help page!!'); });
- 	this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
- 	this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
-
- 	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }

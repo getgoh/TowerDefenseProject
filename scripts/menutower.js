@@ -5,8 +5,8 @@ var MenuTower = function(type)
 {
 	this.type = type;
 	_tower = this;
-	// this.x = x;
-	// this.y = y;
+	this.x = 0;
+	this.y = 9 * 48;
 	this.initialize();
 }
 
@@ -31,8 +31,9 @@ MenuTower.prototype.draw = function()
 
 
 	this.placeHelper = new createjs.Shape();
-	this.placeHelper.graphics.beginFill("#107727").drawRect(0, 0, 48, 48);
-	this.placeHelper.alpha = 0.0;
+	this.cmd = this.placeHelper.graphics.beginFill("#107727").command;
+	this.placeHelper.graphics.drawRect(0, 0, 48, 48);
+	this.placeHelper.alpha = 0.01;
 
 	// _tower.fillObj = new createjs.Graphics.Fill("#107727");
 	// this.placeHelper.graphics.append(fillOjb);
@@ -57,6 +58,8 @@ MenuTower.prototype.draw = function()
 MenuTower.prototype.onMouseDown = function()
 {
 	console.log("CLICK");
+	_tower.placeHelper.x = _tower.previewTower.x;
+	_tower.placeHelper.y = _tower.previewTower.y;
 	_tower.placeHelper.alpha = 0.6;
 }
 
@@ -68,27 +71,33 @@ MenuTower.prototype.onDragged = function(ev)
 MenuTower.prototype.dragMove = function()
 {
 
-	var ix = Math.floor(stage.mouseX / 48);
-	var iy = Math.floor(stage.mouseY / 48);
+	this.ix = Math.floor(stage.mouseX / 48);
+	this.iy = Math.floor(stage.mouseY / 48);
 
-	_tower.x0 = ix * 48;
-	_tower.y0 = iy * 48;
+	_tower.x0 = this.ix * 48;
+	_tower.y0 = this.iy * 48;
 
 	this.previewTower.x = this.placeHelper.x = _tower.x0;
 	this.previewTower.y = this.placeHelper.y = _tower.y0;
 
-	if(this.checkLocation(iy, ix))
+	// placement guide
+	// green = can place
+	// red = cannot place
+	if(this.iy < 10 && this.ix < 20)
 	{
-		console.log("yes");
-	 // ... later, update the fill style/color:
-		// _tower.fillObj.style = "#107727";
-		_tower.placeHelper.graphics.beginFill("#107727");
-	}
-	else
-	{		
-		console.log("no");
-		// _tower.fillObj.style = "#b20e0e";
-		_tower.placeHelper.graphics.beginFill("#b20e0e");
+		if(this.checkLocation(this.iy, this.ix))
+		{
+			// console.log("yes");
+		 // ... later, update the fill style/color:
+			this.cmd.style = "#107727";
+			// _tower.placeHelper.graphics.beginFill("#107727");
+		}
+		else
+		{		
+			// console.log("no");
+			this.cmd.style = "#b20e0e";
+			// _tower.placeHelper.graphics.beginFill("#b20e0e");
+		}
 	}
 
 	// ev.target.x = this.x0;
@@ -116,15 +125,37 @@ MenuTower.prototype.onRelease = function(ev)
 	_tower.placeHelper.alpha = 0;
 	_tower.placeHelper.x = -200;
 
+	// out of bounds
+	if(_tower.iy >= 10 || _tower.ix >= 20)
+	{
+		return;
+	}
+
 	// initiate place tower
 
 
 	// first, check if current position is valid for placement (not in path? no tower already? within bounds?)
 
-	// var canPlace = _tower.checkLocation();
+	var canPlace = _tower.checkLocation(_tower.iy, _tower.ix);
 
 	// second, check if credits is enough for tower
 
+	if(credit < 100)
+		return;
+
+	if(canPlace)
+	{
 	// if above conditions are met, place tower
-	var newTower = new Tower(_tower.x0, _tower.y0, 1);
+		var newTower = new Tower(_tower.x0, _tower.y0, 1);
+		stage1.gameTable[_tower.iy][_tower.ix] = 1;
+
+		// after placing, deduct price of tower from credit
+		credit -= 100;
+		creditTxt.text = "Credit: " + credit;
+	}
 }
+
+
+
+
+

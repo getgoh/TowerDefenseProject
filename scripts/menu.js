@@ -1,13 +1,15 @@
 
+var _menu;
 
 var Menu = function()
 {
 	this.initialize();
+	_menu = this;
 }
 
 Menu.prototype.initialize = function()
 {
-	//this.setCanvasSize();
+	stage.removeAllChildren(); 
 	this.drawText();
 	this.drawButtons();
 }
@@ -34,25 +36,27 @@ Menu.prototype.drawText = function()
 Menu.prototype.drawButtons = function()
 {
 	// start game button
- 	this.gameBtn = new createjs.Bitmap("../images/btnStart.png");
+	// console.log(queue);
+ 	this.gameBtn = new createjs.Bitmap(queue.getResult("imgStart"));
+ 	// this.gameBtn = new createjs.Bitmap("../images/btnStart.png");
  	this.gameBtn.cursor = "pointer";
  	this.gameBtn.x = this.txtTitle.x - 190;
  	this.gameBtn.y = this.txtTitle.y + 50;
 
  	// instructions button
- 	this.instructionsBtn = new createjs.Bitmap("../images/btnInstructions.png");
+ 	this.instructionsBtn = new createjs.Bitmap(queue.getResult("imgInstructions"));
  	this.instructionsBtn.cursor = "pointer";
  	this.instructionsBtn.x = this.txtTitle.x - 194;
  	this.instructionsBtn.y = this.gameBtn.y + 60;
 
  	// options button
- 	this.optionsBtn = new createjs.Bitmap("../images/btnOptions.png");
+ 	this.optionsBtn = new createjs.Bitmap(queue.getResult("imgOptions"));
  	this.optionsBtn.cursor = "pointer";
  	this.optionsBtn.x = this.txtTitle.x + 34;
  	this.optionsBtn.y = this.txtTitle.y + 50;
 
  	// exit button
- 	this.exitBtn = new createjs.Bitmap("../images/btnExit.png");
+ 	this.exitBtn = new createjs.Bitmap(queue.getResult("imgExit"));
  	this.exitBtn.cursor = "pointer";
  	this.exitBtn.x = this.txtTitle.x + 34;
  	this.exitBtn.y = this.optionsBtn.y + 60;
@@ -62,11 +66,6 @@ Menu.prototype.drawButtons = function()
  	this.instructionsBtn.on("click", this.startGame);
  	this.optionsBtn.on("click", this.menuOptions);
  	this.exitBtn.on("click", function (e) { alert('EXIT NOW!!'); });
-
- 	// this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	// this.instructionsBtn.on("click", this.startGame);
- 	// this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
- 	// this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }
@@ -87,6 +86,8 @@ Menu.prototype.menuOptions = function()
     this.musicBtn.cursor = "pointer";
     this.musicBtn.x = stage.canvas.width / 2 - 190;
     this.musicBtn.y = stage.canvas.height / 2 - 10;
+
+    this.musicBtn.on("click", themeMusicToggle);
     
     this.soundsBtn = new createjs.Bitmap(queue.getResult("imgSounds"));
     this.soundsBtn.cursor = "pointer";
@@ -97,6 +98,8 @@ Menu.prototype.menuOptions = function()
     this.menuBtn.cursor = "pointer";
     this.menuBtn.x = stage.canvas.width / 2 - 70;
     this.menuBtn.y = stage.canvas.height / 2 + 50;
+
+    this.menuBtn.on("click", function() { _menu.initialize(); });
 
     stage.addChild(this.musicBtn, this.soundsBtn, this.menuBtn);
 }
