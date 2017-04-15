@@ -57,10 +57,16 @@ Menu.prototype.drawButtons = function()
  	this.exitBtn.x = this.txtTitle.x + 34;
  	this.exitBtn.y = this.optionsBtn.y + 60;
 
+ 	// button listeners
  	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
  	this.instructionsBtn.on("click", this.startGame);
- 	this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
- 	this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
+ 	this.optionsBtn.on("click", this.menuOptions);
+ 	this.exitBtn.on("click", function (e) { alert('EXIT NOW!!'); });
+
+ 	// this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
+ 	// this.instructionsBtn.on("click", this.startGame);
+ 	// this.optionsBtn.on("click", function(e) { alert('Show options page!!'); });
+ 	// this.exitBtn.on("click", function(e) { alert('EXIT NOW!!'); });
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }
@@ -70,4 +76,27 @@ Menu.prototype.startGame = function()
 	stage.removeAllChildren(); 
 	stage1 = new Stage1();
 	drawDashboard();
+}
+
+Menu.prototype.menuOptions = function()
+{
+    stage.removeAllChildren();
+    Menu.prototype.drawText();
+
+    this.musicBtn = new createjs.Bitmap(queue.getResult("imgMusic"));
+    this.musicBtn.cursor = "pointer";
+    this.musicBtn.x = stage.canvas.width / 2 - 190;
+    this.musicBtn.y = stage.canvas.height / 2 - 10;
+    
+    this.soundsBtn = new createjs.Bitmap(queue.getResult("imgSounds"));
+    this.soundsBtn.cursor = "pointer";
+    this.soundsBtn.x = stage.canvas.width / 2 + 34;
+    this.soundsBtn.y = stage.canvas.height / 2 - 10;
+
+    this.menuBtn = new createjs.Bitmap(queue.getResult("imgMenu"));
+    this.menuBtn.cursor = "pointer";
+    this.menuBtn.x = stage.canvas.width / 2 - 70;
+    this.menuBtn.y = stage.canvas.height / 2 + 50;
+
+    stage.addChild(this.musicBtn, this.soundsBtn, this.menuBtn);
 }
