@@ -77,7 +77,7 @@
 		}
 		else
 		{
-			// console.log("NO TARGET: new target!! - " + pEnemy);
+			console.log("NO TARGET: new target!! - " + pEnemy);
 			// shoot at enemy and set it as current target
 			this.initiateShoot(pEnemy);
 		}
@@ -116,7 +116,7 @@
 
 	_t.shoot = function(enemy)
 	{
-		if(enemy.getHealth() > 0)
+		if(enemy && enemy.getHealth() > 0)
 		{			
 			this.newTicks = createjs.Ticker.getTicks();
 			// console.log("NT: " + this.newTicks + ", OT: " + this.oldTicks + ", ROF: " + this.rateOfFire);
@@ -134,6 +134,7 @@
 		}
 		else
 		{
+			// console.log("no target");
 			this.hasTarget = false;
 		}
 	}
