@@ -49,6 +49,7 @@ var themeMusicCtr;
 
 //stage information
 var enemyCount = 10;
+var currState = null;
 
 
 // constants
@@ -64,8 +65,8 @@ function setupTowerInfo()
 {
 	TowerInfo = {
 		BASIC : {
-			rateOfFire : 1,
-			fireRange : 100,
+			rateOfFire : 80,
+			fireRange : 120,
 			price : 100,
 			power : 10,
 			img : queue.getResult("imgt1")

@@ -41,9 +41,9 @@
 	{
 		this.image = queue.getResult("imgMonster1");
 		// this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
-		var scaleNum = 48/512;
-		this.scaleX = scaleNum;
-		this.scaleY = scaleNum;
+		// var scaleNum = 48/512;
+		// this.scaleX = scaleNum;
+		// this.scaleY = scaleNum;
 		// this.x = this.startX;
 	 //    this.y = this.startY;
 	    // stage.addChild(this.currEnemy);
@@ -78,7 +78,7 @@
 		if(this.destinations[this.currDest] == null)
 		{
 			// enemy passed, deduct health from "castle" or something
-			this.die();
+			this.kill();
 		}
 	}
 
@@ -87,10 +87,15 @@
 		this.health -= amount;
 	}
 
-	en.die = function()
+	en.kill = function()
 	{
-		enemies.splice(0, 1);
-		stage.removeChild(this);
+		var index = enemies.indexOf(this);
+		console.log("Index: " + index);
+		if(index > -1)
+		{
+			enemies.splice(index, 1);
+			stage.removeChild(this);
+		}
 	}
 
 window.Enemy = createjs.promote(Enemy, "Bitmap");

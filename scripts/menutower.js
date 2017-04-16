@@ -43,9 +43,9 @@
 	    // 73 x 65
 	    // 182.5 x 162.5
 	    // original = 365 x 325
-	    var scaleNum = 48 / 365;
-	    this.scaleX = scaleNum;
-	    this.scaleY = scaleNum;
+	    // var scaleNum = 48 / 365;
+	    // this.scaleX = scaleNum;
+	    // this.scaleY = scaleNum;
 	    // this.menuTower.y = 9 * 48;
 	    // this.menuTower.x = 0;
 
@@ -63,8 +63,8 @@
 
 	    _mt.previewTower = new createjs.Bitmap(queue.getResult("imgt1"));
 
-	    _mt.previewTower.scaleX = scaleNum;
-	    _mt.previewTower.scaleY = scaleNum;
+	    // _mt.previewTower.scaleX = scaleNum;
+	    // _mt.previewTower.scaleY = scaleNum;
 	    _mt.previewTower.y = 9 * 48;
 	    _mt.previewTower.x = 0;
 	    _mt.previewTower.towerType = 1;

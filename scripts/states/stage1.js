@@ -13,6 +13,8 @@ Stage1.prototype.initialize = function()
 	this.setTable();
 	this.drawMap();
 	this.spawnEnemies();
+	this.oldTicks = createjs.Ticker.getTicks();
+	this.enemiesToSpawn = enemyCount;
 }
 
 // Current not in use, but leaving here
@@ -24,16 +26,33 @@ Stage1.prototype.setCanvasSize = function()
 	holder.style.width = "600px";
 }
 
+
+Stage1.prototype.update = function()
+{
+    this.spawnEnemies();
+}
+
 Stage1.prototype.spawnEnemies = function() {
 
-	for(var x = 1; x <= enemyCount ; x++)
+	if(this.enemiesToSpawn > 0)
 	{
-		var enemy = new Enemy((x * (-72)), cellWidth);
-		stage.addChild(enemy);
-		enemies.push(enemy);
+		this.newTicks = createjs.Ticker.getTicks();
+		if(this.newTicks - this.oldTicks >= 60)
+		{
+			var enemy = new Enemy(0, cellWidth);
+			stage.addChild(enemy);
+			enemies.push(enemy);	
+			this.oldTicks = this.newTicks;
+
+			this.enemiesToSpawn--;
+		}
 	}
-
-
+	// for(var x = 1; x <= enemyCount ; x++)
+	// {
+	// 	var enemy = new Enemy((x * (-72)), cellWidth);
+	// 	stage.addChild(enemy);
+	// 	enemies.push(enemy);
+	// }
 };
 
 Stage1.prototype.setTable = function()

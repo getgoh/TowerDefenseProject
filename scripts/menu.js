@@ -18,6 +18,11 @@ Menu.prototype.initialize = function()
 	this.drawButtons();
 }
 
+Menu.prototype.update = function()
+{
+    // do nothing
+}
+
 // sets canvas size
 Menu.prototype.setCanvasSize = function()
 {
@@ -111,6 +116,7 @@ Menu.prototype.startGame = function()
 {
 	stage.removeAllChildren(); 
 	stage1 = new Stage1();
+    currState = stage1;
 	drawDashboard();
 }
 

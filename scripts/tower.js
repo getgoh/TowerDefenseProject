@@ -50,8 +50,8 @@
 	    var scaleNum = 48/368;
 
 		console.log("Draw!!");
-	    this.scaleX = scaleNum;
-	    this.scaleY = scaleNum;
+	    // this.scaleX = scaleNum;
+	    // this.scaleY = scaleNum;
 		this.x = this.x;
 		this.y = this.y;
 
@@ -126,9 +126,11 @@
 				testlog("tower: " + this.x + ", " + this.y);
 
 				// produce bullet, then add to bullets[] array				
-				var bullet = new Bullet(this.x, this.y, enemy);
+				var bullet = new Bullet(this.x + 24, this.y + 24, enemy, this.power);
 				stage.addChild(bullet);
 				bullets.push(bullet);
+
+				this.oldTicks = this.newTicks;
 			}
 			//this.hasTarget = true;
 		}

@@ -33,11 +33,14 @@ function drawDashboard()
     creditTxt.y = menuTower1.y + 48;
 
     stage.addChild(creditTxt);
+
+    stage.on("mousemove", function () { console.log(stage.mouseX + ", " + stage.mouseY) });
 }
 
 //
 function update(event) 
 {
+    currState.update();
 
     // enemies
     for(var x = 0; x < enemies.length; x++)
@@ -119,10 +122,10 @@ function preloader()
         { id: "imgMenu", src: "images/btnMenu.png" },
         { id: "imgL1", src: "images/btnLevel1.png" },
         { id: "imgL2", src: "images/btnLevel2.png" },
-        { id: "imgt1", src: "images/t1.png" },
+        { id: "imgt1", src: "images/t1-new.png" },
         { id: "imgt2", src: "images/t2.png" },
         { id: "imgt3", src: "images/t3.png" },
-        { id: "imgMonster1", src: "images/monster1.png" },
+        { id: "imgMonster1", src: "images/monster1-new.png" },
         { id: "imgSounds", src: "images/btnSounds.png" },
         { id: "imgMusic", src: "images/btnMusic.png" }
     ]);
@@ -145,9 +148,11 @@ function finishBar()
     // set tick speed
     stage.enableMouseOver(10);
     createjs.Ticker.setFPS(60);
-    createjs.Ticker.on("tick", update);
 
     // start the menu
     menu = new Menu();
+    currState = menu;
     window.enemies = enemies;
+
+    createjs.Ticker.on("tick", update);
 }
