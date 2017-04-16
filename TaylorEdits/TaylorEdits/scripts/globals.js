@@ -24,6 +24,7 @@ var _menu;
 // game object collections
 var enemies = [];
 var towers = [];
+var bullets = [];
 var stage1;
 var stage2;
 //stage2 paths
@@ -45,7 +46,8 @@ var path2 = [
         //{ x: , y: 144 },
         { x: 576, y: 144 },
         { x: 768, y: 144 }];
-//used in tower.js
+
+//used in menutower.js
 var _tower;
 
 var menuTower1, menuTower2;
@@ -67,3 +69,49 @@ var themeMusicCtr;
 
 //stage information
 var enemyCount = 10;
+
+
+// constants
+var TowersEnum = {
+	BASIC : 1,
+	ADVANCED : 2,
+	ULTIMATE : 3
+};
+
+var TowerInfo;
+
+function setupTowerInfo()
+{
+	TowerInfo = {
+		BASIC : {
+			rateOfFire : 1,
+			fireRange : 100,
+			price : 100,
+			power : 10,
+			img : queue.getResult("imgt1")
+		},
+		ADVANCED : {
+			rateOfFire : 2,
+			fireRange : 100,
+			price : 120,
+			power : 8,
+			img : queue.getResult("imgt2")
+		},
+		ULTIMATE : {
+			rateOfFire : 1,
+			fireRange : 150,
+			price : 150,
+			power : 15,
+			img : queue.getResult("imgt3")
+		}
+	};
+}
+
+
+
+
+
+
+
+
+

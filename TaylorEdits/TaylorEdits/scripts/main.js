@@ -11,44 +11,59 @@ function init()
     holder = document.getElementById('holder');
     stage = new createjs.Stage(canvas);
 
-    // set tick speed
-    stage.enableMouseOver(10);
-    createjs.Ticker.setFPS(60);
-    createjs.Ticker.on("tick", update);
 
-    // start the menu
-    //menu = new Menu();
-    // window.enemies = enemies;
-    // enemy1 = new Enemy(400, 500, 600);
-
-    
     //preloader and progressbar
     progressBar();
 
 }
 
+var _Bbullet;
+
 //create the MenuTower
 function drawDashboard()
 {
-    
-    menuTower1 = new MenuTower(1);
+    // _Bbullet = new createjs.Shape();
+    // _Bbullet.graphics.beginFill("#ff0000").drawCircle(400, 400, 50);
+    // // _Bbullet.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)");
+    // stage.addChild(_Bbullet);
+
+    menuTower1 = new MenuTower(TowersEnum.BASIC);
     creditTxt = new createjs.Text("Credit: " + credit, "20px Arial");
     creditTxt.x = menuTower1.x;
     creditTxt.y = menuTower1.y + 48;
 
     stage.addChild(creditTxt);
+
+    stage.on("mousemove", function () { console.log(stage.mouseX + ", " + stage.mouseY) });
 }
 
 //
-function update(event) {
+function update(event) 
+{
 
-	// enemy1.move();
+    currState.update();
 
-    for(var x = 1; x < enemies.length; x++)
+    // enemies
+    for(var x = 0; x < enemies.length; x++)
     {
-        //console.log(enemies[x]);
         enemies[x].move();
+
+        // towers
+        for(var y = 0; y < towers.length; y++)
+        {
+            if(enemies[x])
+                towers[y].checkIfInRange(enemies[x]);
+        }
+
+        // bullets
+        for(var b = 0;b < bullets.length; b++)
+        {
+            if(enemies[x]) 
+                bullets[b].move();
+        }
     }
+
+    
 
     stage.update();
 }
@@ -88,6 +103,7 @@ function preloader()
     createjs.Sound.initializeDefaultPlugins();
     queue.installPlugin(createjs.Sound);
     queue.addEventListener("complete", finishBar);
+    queue.addEventListener("complete", setupTowerInfo);
     queue.addEventListener("progress", updateBar);
 
     // after pre-load is complete, call themeMusicStart function, which will play the theme music
@@ -107,10 +123,11 @@ function preloader()
         { id: "imgMenu", src: "images/btnMenu.png" },
         { id: "imgL1", src: "images/btnLevel1.png" },
         { id: "imgL2", src: "images/btnLevel2.png" },
-        { id: "imgt1", src: "images/t1.png" },
+        { id: "imgt1", src: "images/t1-new.png" },
         { id: "imgt2", src: "images/t2.png" },
         { id: "imgt3", src: "images/t3.png" },
-        { id: "imgMonster1", src: "images/monster1.png" },
+        { id: "imgMonster1", src: "images/monster1-new.png" },
+        { id: "imgMonster2", src: "images/boss.png" },
         { id: "imgSounds", src: "images/btnSounds.png" },
         { id: "imgMusic", src: "images/btnMusic.png" }
     ]);
@@ -130,8 +147,12 @@ function finishBar()
 {
     stage.removeChild(loadingBarContainer);
 
+    // set tick speed
+    stage.enableMouseOver(10);
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.on("tick", update);
+
     // start the menu
     menu = new Menu();
     window.enemies = enemies;
-    // enemy1 = new Enemy(400, 500, 600);
 }
