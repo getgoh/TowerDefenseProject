@@ -77,9 +77,20 @@
 
 		if(this.destinations[this.currDest] == null)
 		{
-			enemies.splice(0, 1);
-			stage.removeChild(this);
+			// enemy passed, deduct health from "castle" or something
+			this.die();
 		}
+	}
+
+	en.takeDamage = function(amount)
+	{
+		this.health -= amount;
+	}
+
+	en.die = function()
+	{
+		enemies.splice(0, 1);
+		stage.removeChild(this);
 	}
 
 window.Enemy = createjs.promote(Enemy, "Bitmap");

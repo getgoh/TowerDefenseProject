@@ -17,9 +17,16 @@ function init()
 
 }
 
+var _Bbullet;
+
 //create the MenuTower
 function drawDashboard()
 {
+    // _Bbullet = new createjs.Shape();
+    // _Bbullet.graphics.beginFill("#ff0000").drawCircle(400, 400, 50);
+    // // _Bbullet.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)");
+    // stage.addChild(_Bbullet);
+
     menuTower1 = new MenuTower(TowersEnum.BASIC);
     creditTxt = new createjs.Text("Credit: " + credit, "20px Arial");
     creditTxt.x = menuTower1.x;
@@ -40,7 +47,15 @@ function update(event)
         // towers
         for(var y = 0; y < towers.length; y++)
         {
-            towers[y].checkIfInRange(enemies[x]);
+            if(enemies[x])
+                towers[y].checkIfInRange(enemies[x]);
+        }
+
+        // bullets
+        for(var b = 0;b < bullets.length; b++)
+        {
+            if(enemies[x]) 
+                bullets[b].move();
         }
     }
 

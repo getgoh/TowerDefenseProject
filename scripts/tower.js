@@ -1,4 +1,4 @@
-	
+
 (function() {
 
 	var Tower = function(x, y, type)
@@ -68,26 +68,49 @@
 
 	_t.checkIfInRange = function(pEnemy)
 	{
+		// console.log(this);
 		if(this.hasTarget)
 		{
-			// shoot on existing target
+			// console.log("has existing target");
+			// shoot at existing target
+			this.initiateShoot(this.target)
 		}
 		else
 		{
-			// check distance of enemy
-			var dist = _t.distance(this, pEnemy);
-			// console.log("dist:" + dist);
-			if(dist <= this.getFireRange())
-			{
-				console.log("enemy in range: " + pEnemy);
-				// shoot at enemy and set enemy as target
-				//pTower.shoot(pEnemy);
-				this.setTarget(pEnemy);
-			}
-			else
-			{
-				// console.log("enemy NOT in range: " + pEnemy);
-			}
+			// console.log("NO TARGET: new target!! - " + pEnemy);
+			// shoot at enemy and set it as current target
+			this.initiateShoot(pEnemy);
+		}
+	}
+
+	_t.initiateShoot = function(pEnemy)
+	{
+		// check distance of enemy
+		// console.log("EnemyX-Y: " + pEnemy.x + "-" + pEnemy.y);
+		// console.log("EnemyX: " + pEnemy.x);
+		// console.log("THIS: " + _t.x + ", " + _t.y);
+		var dist = this.distance(this, pEnemy);
+		// console.log("dist:" + dist + ", FR: " + this.getFireRange());
+		if(dist <= this.getFireRange())
+		{
+			// console.log("enemy in range: " + pEnemy);
+			// shoot at enemy
+			this.shoot(pEnemy);
+			this.setTarget(pEnemy);	
+		}
+		else
+		{
+			// console.log("enemy NOT in range: " + pEnemy);
+		}
+	}
+
+	var tt = true;
+	function testlog(msg)
+	{
+		if(tt)
+		{
+			console.log(msg);
+			tt = false;
 		}
 	}
 
@@ -96,11 +119,22 @@
 		if(enemy.getHealth() > 0)
 		{			
 			this.newTicks = createjs.Ticker.getTicks();
+			// console.log("NT: " + this.newTicks + ", OT: " + this.oldTicks + ", ROF: " + this.rateOfFire);
 			if(this.newTicks - this.oldTicks >= this.rateOfFire)
 			{
-				// produce bullet, then add to bullets[] array
+
+				testlog("tower: " + this.x + ", " + this.y);
+
+				// produce bullet, then add to bullets[] array				
+				var bullet = new Bullet(this.x, this.y, enemy);
+				stage.addChild(bullet);
+				bullets.push(bullet);
 			}
-			this.hasTarget = true;
+			//this.hasTarget = true;
+		}
+		else
+		{
+			this.hasTarget = false;
 		}
 	}
 
@@ -116,6 +150,7 @@
 	_t.setTarget = function(enemy)
 	{
 		this.target = enemy;
+		this.hasTarget = true;
 	}
 
 	_t.onSelectTower = function()

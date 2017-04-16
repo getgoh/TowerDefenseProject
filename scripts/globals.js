@@ -24,6 +24,7 @@ var _menu;
 // game object collections
 var enemies = [];
 var towers = [];
+var bullets = [];
 var stage1;
 
 //used in menutower.js
