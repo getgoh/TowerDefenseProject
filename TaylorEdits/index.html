@@ -2,15 +2,19 @@
 <html>
 <head>
     <title></title>
-    <script src="lib/easeljs-0.7.1.min.js"></script>
+    <script src="lib/easeljs-0.8.2.min.js"></script>
+    <!-- 0.7.1 IS OUTDATED!!! -->
+    <!--<script src="lib/easeljs-0.7.1.min.js"></script>-->
     <script src="lib/preloadjs-0.4.1.min.js"></script>
     <script src="lib/tweenjs-0.5.1.min.js"></script>
     <script src="lib/soundjs-0.5.2.min.js"></script>
+    <script src="scripts/globals.js"></script>   
     <script src="scripts/main.js"></script>
     <script src="scripts/menu.js"></script>
     <script src="scripts/sounds.js"></script>
     <script src="scripts/enemy.js"></script>
     <script src="scripts/states/stage1.js"></script>
+    <script src="scripts/states/stage2.js"></script>
     <script src="scripts/menutower.js"></script>
     <script src="scripts/tower.js"></script>
     
@@ -18,8 +22,8 @@
 
 <body onload="init()">
 
-<div id="holder" style="width:960px;margin: 0px auto">
-	<canvas id="canvas" width="960" height="600" style="border: black solid 1px"></canvas>
+<div id="holder" style="width:720px;margin: 0px auto">
+	<canvas id="canvas" width="720" height="600" style="border: black solid 1px"></canvas>
 </div>
 
 <script>
