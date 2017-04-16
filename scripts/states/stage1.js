@@ -26,33 +26,43 @@ Stage1.prototype.setCanvasSize = function()
 	holder.style.width = "600px";
 }
 
-
-Stage1.prototype.update = function()
+Stage1.prototype.update = function ()
 {
     this.spawnEnemies();
 }
 
-Stage1.prototype.spawnEnemies = function() {
+Stage1.prototype.spawnEnemies = function ()
+{
 
-	if(this.enemiesToSpawn > 0)
-	{
-		this.newTicks = createjs.Ticker.getTicks();
-		if(this.newTicks - this.oldTicks >= 60)
-		{
-			var enemy = new Enemy(0, cellWidth);
-			stage.addChild(enemy);
-			enemies.push(enemy);	
-			this.oldTicks = this.newTicks;
+    var area = [
+		{ x: 384, y: 48 },
+		{ x: 384, y: 144 },
+		{ x: 48, y: 144 },
+		{ x: 48, y: 288 },
+		{ x: 528, y: 288 },
+		{ x: 528, y: 48 }];
 
-			this.enemiesToSpawn--;
-		}
-	}
-	// for(var x = 1; x <= enemyCount ; x++)
-	// {
-	// 	var enemy = new Enemy((x * (-72)), cellWidth);
-	// 	stage.addChild(enemy);
-	// 	enemies.push(enemy);
-	// }
+    //for (var x = 1; x <= enemyCount ; x++) {
+    //    var enemy = new Enemy((x * (-72)), cellWidth, area);
+    //    enemies.push(enemy);
+    //    console.log(enemy)
+    //    stage.addChild(enemy);
+    //}
+
+    if (this.enemiesToSpawn > 0) {
+        this.newTicks = createjs.Ticker.getTicks();
+        if (this.newTicks - this.oldTicks >= 60) {
+            var enemy = new Enemy(0, cellWidth, area);
+            stage.addChild(enemy);
+            console.log(enemy);
+            enemies.push(enemy);
+            this.oldTicks = this.newTicks;
+
+            this.enemiesToSpawn--;
+        }
+    }
+
+
 };
 
 Stage1.prototype.setTable = function()

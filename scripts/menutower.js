@@ -43,9 +43,9 @@
 	    // 73 x 65
 	    // 182.5 x 162.5
 	    // original = 365 x 325
-	    // var scaleNum = 48 / 365;
-	    // this.scaleX = scaleNum;
-	    // this.scaleY = scaleNum;
+	    var scaleNum = 48 / 365;
+	    this.scaleX = scaleNum;
+	    this.scaleY = scaleNum;
 	    // this.menuTower.y = 9 * 48;
 	    // this.menuTower.x = 0;
 
@@ -63,8 +63,8 @@
 
 	    _mt.previewTower = new createjs.Bitmap(queue.getResult("imgt1"));
 
-	    // _mt.previewTower.scaleX = scaleNum;
-	    // _mt.previewTower.scaleY = scaleNum;
+	    _mt.previewTower.scaleX = scaleNum;
+	    _mt.previewTower.scaleY = scaleNum;
 	    _mt.previewTower.y = 9 * 48;
 	    _mt.previewTower.x = 0;
 	    _mt.previewTower.towerType = 1;
@@ -129,11 +129,20 @@
 
 	_mt.checkLocation = function(row, col)
 	{
-		if(stage1.gameTable[row][col] != 0)
-		{
-			return false;
-		}
-		return true;
+	    if (stage1) {
+	        console.log(row);
+	        if (stage1.gameTable[row][col] != 0) {
+	            return false;
+	        }
+	        return true;
+	    }
+	    if (stage2) {
+	        console.log(row);
+	        if (stage2.gameTable[row][col] != 0) {
+	            return false;
+	        }
+	        return true;
+	    }
 	}
 
 	_mt.onRelease = function(ev)
@@ -170,7 +179,12 @@
 		// if above conditions are met, place tower
 			var newTower = new Tower(_mt.x0, _mt.y0, 1);
 			stage.addChild(newTower);
-			stage1.gameTable[_mt.iy][_mt.ix] = 1;
+			if (stage1) {
+			    stage1.gameTable[_mt.iy][_mt.ix] = 1;
+			}
+			if (stage2) {
+			    stage2.gameTable[_mt.iy][_mt.ix] = 1;
+			}
 
 			towers.push(newTower);
 

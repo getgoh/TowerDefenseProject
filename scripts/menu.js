@@ -18,11 +18,10 @@ Menu.prototype.initialize = function()
 	this.drawButtons();
 }
 
-Menu.prototype.update = function()
+Menu.prototype.update = function ()
 {
     // do nothing
 }
-
 // sets canvas size
 Menu.prototype.setCanvasSize = function()
 {
@@ -73,7 +72,7 @@ Menu.prototype.drawButtons = function()
 
  	// button listeners
  	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	this.instructionsBtn.on("click", this.startGame);
+ 	this.instructionsBtn.on("click", this.Maps);
  	this.optionsBtn.on("click", this.menuOptions);
  	this.exitBtn.on("click", this.Maps );
 
@@ -92,7 +91,6 @@ Menu.prototype.Maps = function()
     this.lvl1Btn.cursor = "pointer";
     this.lvl1Btn.x = stage.canvas.width / 2 - 190;
     this.lvl1Btn.y = stage.canvas.height / 2 - 10;
-
     this.lvl1Btn.on("click", _menu.startGame);
 
     // Level 2
@@ -100,24 +98,32 @@ Menu.prototype.Maps = function()
     this.lvl2Btn.cursor = "pointer";
     this.lvl2Btn.x = stage.canvas.width / 2 + 34;
     this.lvl2Btn.y = stage.canvas.height / 2 - 10;
+    this.lvl2Btn.on("click", _menu.startTwo);
 
     //return to Menu button
     this.menuBtn = new createjs.Bitmap(queue.getResult("imgMenu"));
     this.menuBtn.cursor = "pointer";
     this.menuBtn.x = stage.canvas.width / 2 - 70;
     this.menuBtn.y = stage.canvas.height / 2 + 50;
-
     this.menuBtn.on("click", function () { _menu.initialize(); });
+
 
     stage.addChild(this.lvl1Btn, this.lvl2Btn, this.menuBtn);
 }
-// choose maptype
+// map1
 Menu.prototype.startGame = function()
 {
 	stage.removeAllChildren(); 
 	stage1 = new Stage1();
-    currState = stage1;
+	currState = stage1;
 	drawDashboard();
+}
+// map2
+Menu.prototype.startTwo = function () {
+    stage.removeAllChildren();
+    stage2 = new Stage2();
+    currState = stage2;
+    drawDashboard();
 }
 
 // start options-menu

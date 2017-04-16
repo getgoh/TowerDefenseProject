@@ -1,7 +1,7 @@
 	
 (function(){
 
-	var Enemy = function(startX, startY)
+	var Enemy = function(startX, startY, pathArea)
 	{
 		this.Bitmap_constructor();
 		this.x = startX;
@@ -10,14 +10,14 @@
 		this.health = 100;
 		this.currDest = 0;
 
-		this.initialize();
+		this.initialize(pathArea);
 	}
 
 	var en = createjs.extend(Enemy, createjs.Bitmap);
 
-	en.initialize = function()
+	en.initialize = function(pathArea)
 	{
-		this.setDestinations();
+		this.setDestinations(pathArea);
 		this.drawEnemy();
 	}
 
@@ -26,24 +26,26 @@
 		return this.health;
 	}
 
-	en.setDestinations = function()
+	en.setDestinations = function(pathArea)
 	{
-		this.destinations = [ 
-		{x: 384, y: 48}, 
-		{x: 384, y: 144}, 
-		{x:  48, y: 144},
-		{x:  48, y: 288},
-		{x: 528, y: 288},
-		{x: 528, y: 48} ];
+		//this.destinations = [ 
+		//{x: 384, y: 48}, 
+		//{x: 384, y: 144}, 
+		//{x:  48, y: 144},
+		//{x:  48, y: 288},
+		//{x: 528, y: 288},
+		//{ x: 528, y: 48 }];
+
+		this.destinations = pathArea;
 	}
 
 	en.drawEnemy = function()
 	{
 		this.image = queue.getResult("imgMonster1");
 		// this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
-		// var scaleNum = 48/512;
-		// this.scaleX = scaleNum;
-		// this.scaleY = scaleNum;
+		var scaleNum = 48/512;
+		this.scaleX = scaleNum;
+		this.scaleY = scaleNum;
 		// this.x = this.startX;
 	 //    this.y = this.startY;
 	    // stage.addChild(this.currEnemy);
@@ -78,7 +80,7 @@
 		if(this.destinations[this.currDest] == null)
 		{
 			// enemy passed, deduct health from "castle" or something
-			this.kill();
+			this.die();
 		}
 	}
 
@@ -87,15 +89,10 @@
 		this.health -= amount;
 	}
 
-	en.kill = function()
+	en.die = function()
 	{
-		var index = enemies.indexOf(this);
-		console.log("Index: " + index);
-		if(index > -1)
-		{
-			enemies.splice(index, 1);
-			stage.removeChild(this);
-		}
+		enemies.splice(0, 1);
+		stage.removeChild(this);
 	}
 
 window.Enemy = createjs.promote(Enemy, "Bitmap");

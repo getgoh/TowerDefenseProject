@@ -26,6 +26,26 @@ var enemies = [];
 var towers = [];
 var bullets = [];
 var stage1;
+var stage2;
+//stage2 paths
+var path1 = [
+		{ x: 432, y: 192 },
+		{ x: 336, y: 192 },
+		{ x: 336, y: 288 }, //split occurs
+
+		{ x: 144, y: 288 },
+		{ x: 144, y: 384 },
+		{ x: 48, y: 384 },
+        { x: 48, y: 240 }];
+var path2 = [
+        { x: 432, y: 192 },
+		{ x: 336, y: 192 },
+		{ x: 336, y: 288 }, //split occurs
+
+        { x: 576, y: 288 },
+        //{ x: , y: 144 },
+        { x: 576, y: 144 },
+        { x: 768, y: 144 }];
 
 //used in menutower.js
 var _tower;
@@ -65,8 +85,8 @@ function setupTowerInfo()
 {
 	TowerInfo = {
 		BASIC : {
-			rateOfFire : 80,
-			fireRange : 120,
+			rateOfFire : 1,
+			fireRange : 100,
 			price : 100,
 			power : 10,
 			img : queue.getResult("imgt1")

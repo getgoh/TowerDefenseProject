@@ -40,6 +40,7 @@ function drawDashboard()
 //
 function update(event) 
 {
+
     currState.update();
 
     // enemies
@@ -126,6 +127,7 @@ function preloader()
         { id: "imgt2", src: "images/t2.png" },
         { id: "imgt3", src: "images/t3.png" },
         { id: "imgMonster1", src: "images/monster1-new.png" },
+        { id: "imgMonster2", src: "images/boss.png" },
         { id: "imgSounds", src: "images/btnSounds.png" },
         { id: "imgMusic", src: "images/btnMusic.png" }
     ]);
@@ -148,11 +150,10 @@ function finishBar()
     // set tick speed
     stage.enableMouseOver(10);
     createjs.Ticker.setFPS(60);
+    createjs.Ticker.on("tick", update);
 
     // start the menu
     menu = new Menu();
     currState = menu;
     window.enemies = enemies;
-
-    createjs.Ticker.on("tick", update);
 }

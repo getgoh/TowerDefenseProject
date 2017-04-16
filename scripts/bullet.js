@@ -8,11 +8,9 @@
 		this.hasTarget = false;
 		this.damage = damage;
 		this.enemy = enemy;
-		this.speed = .5;
-		this.startX = x;
-		this.startY = y;
-		this.x = 0;
-		this.y = 0;
+		this.speed = .1;
+		this.x = x;
+		this.y = y;
 		this.oldTicks = createjs.Ticker.getTicks();
 
 
@@ -34,7 +32,7 @@
 	_b.initialize = function()
 	{
 		testlog("bullet: " +this.x + ", " + this.y);
-		this.graphics.beginFill("#ff0000").drawCircle(this.startX, this.startY, 5);
+		this.graphics.beginFill("#ff0000").drawCircle(this.x, this.y, 10);
 	}
 
 	_b.move = function()
@@ -42,35 +40,21 @@
 		// console.log("this: " + this.x + ", " + this.y);
 		// console.log("enemy: " + this.enemy.x + ", " + this.enemy.y);
 
-		var enemyX = this.enemy.x + 24;
-		var enemyY = this.enemy.y + 24;
-
-		var thisX = this.x + this.startX;
-		var thisY = this.y + this.startY;
-
-		// console.log("thisX: " + this.x + ", thisY: " + this.y + " --- enemyX: " + enemyX + ", enemyY: " + enemyY);
-
-		isPositiveX = (enemyX - thisX) > 0 ? true : false;
-		isPositiveY = (enemyY - thisY) > 0 ? true : false;
+		isPositiveX = (this.enemy.x - this.x) > 0 ? true : false;
+		isPositiveY = (this.enemy.y - this.y) > 0 ? true : false;
 
 		this.x = isPositiveX ? this.x + this.speed : this.x - this.speed;
 		this.y = isPositiveY ? this.y + this.speed : this.y - this.speed;
 
 
-		// if((thisX == enemyX || thisX > enemyX+5 || thisX < enemyX-5)
-	 //    && (thisY == enemyY || thisY > enemyY+5 || thisY < enemyY-5))
-		if(thisX == enemyX && thisY == enemyY)
+		if((this.x == this.enemy.x || this.x > this.enemy.x-5 || this.x < this.enemy.x+5)
+	    && (this.y == this.enemy.y || this.y > this.enemy.y-5 || this.y < this.enemy.y+5))
 		{
 			this.enemy.takeDamage(this.damage);
 			if(this.enemy.health <= 0)
 			{
-				var index = bullets.indexOf(this);
-				if(index > -1)
-				{
-					bullets.splice(index, 1);
-					stage.removeChild(this);
-				}
-				this.enemy.kill();
+				this.enemy.die();
+				stage.removeChild(this);
 			}
 		}
 
