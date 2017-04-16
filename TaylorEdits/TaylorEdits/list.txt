@@ -1,0 +1,29 @@
+Menus al
+
+createjs Taylor
+
+2 maps  Alex
+
+health status Taylor
+
+random reward pickups rodel
+
+sound effects  Taylor
+
+soundtrack   Taylor
+
+Document  Alex
+
+BONUS POINTS:
+
+enemy revamp Alex
+
+Boss monster
+
+power-ups    rodel
+
+inventory to use powerups   rodel
+
+mini-game
+
+save/pause/load game.
