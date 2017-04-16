@@ -47,23 +47,9 @@
 
 	_t.drawTower = function()
 	{
-	    var scaleNum = 48/368;
-
-		console.log("Draw!!");
-	    this.scaleX = scaleNum;
-	    this.scaleY = scaleNum;
-		this.x = this.x;
-		this.y = this.y;
-
 		this.createRangeCircle();
 
 		this.on("click", this.onSelectTower);
-
-		console.log("x:" + this.x
-			+ ", y:" + this.y
-			+ ", scaleX:" + this.scaleX);
-
-		//stage.addChild(this.currTower);
 	}
 
 	_t.checkIfInRange = function(pEnemy)
@@ -86,14 +72,9 @@
 	_t.initiateShoot = function(pEnemy)
 	{
 		// check distance of enemy
-		// console.log("EnemyX-Y: " + pEnemy.x + "-" + pEnemy.y);
-		// console.log("EnemyX: " + pEnemy.x);
-		// console.log("THIS: " + _t.x + ", " + _t.y);
 		var dist = this.distance(this, pEnemy);
-		// console.log("dist:" + dist + ", FR: " + this.getFireRange());
 		if(dist <= this.getFireRange())
 		{
-			// console.log("enemy in range: " + pEnemy);
 			// shoot at enemy
 			this.shoot(pEnemy);
 			this.setTarget(pEnemy);	
@@ -120,15 +101,18 @@
 		{			
 			this.newTicks = createjs.Ticker.getTicks();
 			// console.log("NT: " + this.newTicks + ", OT: " + this.oldTicks + ", ROF: " + this.rateOfFire);
+			// testlog("ROF: " + this.rateOfFire);
 			if(this.newTicks - this.oldTicks >= this.rateOfFire)
 			{
 
-				testlog("tower: " + this.x + ", " + this.y);
+				// console.log("tower: " + this.x + ", " + this.y);
 
 				// produce bullet, then add to bullets[] array				
-				var bullet = new Bullet(this.x, this.y, enemy);
+				var bullet = new Bullet(this.x + 24, this.y + 24, enemy, this.power);
 				stage.addChild(bullet);
 				bullets.push(bullet);
+
+				this.oldTicks = this.newTicks;
 			}
 			//this.hasTarget = true;
 		}

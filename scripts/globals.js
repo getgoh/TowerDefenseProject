@@ -85,10 +85,10 @@ function setupTowerInfo()
 {
 	TowerInfo = {
 		BASIC : {
-			rateOfFire : 1,
+			rateOfFire : 80,
 			fireRange : 100,
 			price : 100,
-			power : 10,
+			power : 30,
 			img : queue.getResult("imgt1")
 		},
 		ADVANCED : {

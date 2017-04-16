@@ -1,4 +1,4 @@
-	
+
 (function() {
 
 	// constructor
@@ -40,18 +40,6 @@
 	            break;
 	    }
 
-	    // 73 x 65
-	    // 182.5 x 162.5
-	    // original = 365 x 325
-	    var scaleNum = 48 / 365;
-	    this.scaleX = scaleNum;
-	    this.scaleY = scaleNum;
-	    // this.menuTower.y = 9 * 48;
-	    // this.menuTower.x = 0;
-
-
-
-
 	    _mt.placeHelper = new createjs.Shape();
 	    _mt.cmd = _mt.placeHelper.graphics.beginFill("#107727").command;
 	    _mt.placeHelper.graphics.drawRect(0, 0, 48, 48);
@@ -63,8 +51,8 @@
 
 	    _mt.previewTower = new createjs.Bitmap(queue.getResult("imgt1"));
 
-	    _mt.previewTower.scaleX = scaleNum;
-	    _mt.previewTower.scaleY = scaleNum;
+	    // _mt.previewTower.scaleX = scaleNum;
+	    // _mt.previewTower.scaleY = scaleNum;
 	    _mt.previewTower.y = 9 * 48;
 	    _mt.previewTower.x = 0;
 	    _mt.previewTower.towerType = 1;
@@ -92,7 +80,6 @@
 
 	_mt.dragMove = function()
 	{
-
 		_mt.ix = Math.floor(stage.mouseX / 48);
 		_mt.iy = Math.floor(stage.mouseY / 48);
 
@@ -177,7 +164,7 @@
 		if(canPlace)
 		{
 		// if above conditions are met, place tower
-			var newTower = new Tower(_mt.x0, _mt.y0, 1);
+			var newTower = new Tower(_mt.x0, _mt.y0, TowersEnum.BASIC);
 			stage.addChild(newTower);
 			if (stage1) {
 			    stage1.gameTable[_mt.iy][_mt.ix] = 1;

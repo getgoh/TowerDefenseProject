@@ -1,4 +1,4 @@
-	
+
 (function(){
 
 	var Enemy = function(startX, startY, pathArea)
@@ -28,36 +28,12 @@
 
 	en.setDestinations = function(pathArea)
 	{
-		//this.destinations = [ 
-		//{x: 384, y: 48}, 
-		//{x: 384, y: 144}, 
-		//{x:  48, y: 144},
-		//{x:  48, y: 288},
-		//{x: 528, y: 288},
-		//{ x: 528, y: 48 }];
-
 		this.destinations = pathArea;
 	}
 
 	en.drawEnemy = function()
 	{
 		this.image = queue.getResult("imgMonster1");
-		// this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
-		var scaleNum = 48/512;
-		this.scaleX = scaleNum;
-		this.scaleY = scaleNum;
-		// this.x = this.startX;
-	 //    this.y = this.startY;
-	    // stage.addChild(this.currEnemy);
-
-		// this.txtTitle = new createjs.Text("E", "50px Arial", "#ff7700");
-
-	 //    this.txtTitle.textAlign = 'center';
-	 //    this.txtTitle.textBaseline = 'middle';
-	 //    this.txtTitle.x = this.startX;
-	 //    this.txtTitle.y = this.startY;
-
-	 //    stage.addChild(this.txtTitle);
 	}
 
 	var isPositiveX, isPositiveY;
@@ -80,7 +56,7 @@
 		if(this.destinations[this.currDest] == null)
 		{
 			// enemy passed, deduct health from "castle" or something
-			this.die();
+			this.kill();
 		}
 	}
 
@@ -89,7 +65,7 @@
 		this.health -= amount;
 	}
 
-	en.die = function()
+	en.kill = function()
 	{
 		enemies.splice(0, 1);
 		stage.removeChild(this);
