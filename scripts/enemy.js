@@ -1,34 +1,33 @@
 	
+(function(){
 
+	var Enemy = function(startX, startY)
+	{
+		this.Bitmap_constructor();
+		this.x = startX;
+		this.y = startY;
+		this.speed = 1;
+		this.health = 100;
+		this.currDest = 0;
 
-var Enemy = function(startX, startY)
-{
-	this.startX = startX;
-	this.startY = startY;
-	this.speed = 1;
-	this.initialize();
-	this.currDest = 0;
-}
+		this.initialize();
+	}
 
-Enemy.prototype.initialize = function()
-{
-	this.setDestinations();
-	this.draw();
-	// this.setCanvasSize();
-	// this.drawText();
-	// this.drawButtons();
-}
+	var en = createjs.extend(Enemy, createjs.Bitmap);
 
-Enemy.prototype.setDestinations = function()
-{
-	// this.destinations = [ 
-	// 	{x: 400, y: 40}, 
-	// 	{x: 400, y: 150}, 
-	// 	{x:  10, y: 150},
-	// 	{x:  10, y: 300},
-	// 	{x: 550, y: 300},
-	// 	{x: 550, y: 10} ];
+	en.initialize = function()
+	{
+		this.setDestinations();
+		this.drawEnemy();
+	}
 
+	en.getHealth = function()
+	{
+		return this.health;
+	}
+
+	en.setDestinations = function()
+	{
 		this.destinations = [ 
 		{x: 384, y: 48}, 
 		{x: 384, y: 144}, 
@@ -36,47 +35,53 @@ Enemy.prototype.setDestinations = function()
 		{x:  48, y: 288},
 		{x: 528, y: 288},
 		{x: 528, y: 48} ];
-}
-
-Enemy.prototype.draw = function()
-{
-	this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
-	var scaleNum = 48/512;
-	this.currEnemy.scaleX = scaleNum;
-	this.currEnemy.scaleY = scaleNum;
-	this.currEnemy.x = this.startX;
-    this.currEnemy.y = this.startY;
-    stage.addChild(this.currEnemy);
-
-	// this.txtTitle = new createjs.Text("E", "50px Arial", "#ff7700");
-
- //    this.txtTitle.textAlign = 'center';
- //    this.txtTitle.textBaseline = 'middle';
- //    this.txtTitle.x = this.startX;
- //    this.txtTitle.y = this.startY;
-
- //    stage.addChild(this.txtTitle);
-}
-
-var isPositiveX, isPositiveY;
-
-Enemy.prototype.move = function()
-{
-	isPositiveX = (this.destinations[this.currDest].x - this.currEnemy.x) > 0 ? true : false;
-	isPositiveY = (this.destinations[this.currDest].y - this.currEnemy.y) > 0 ? true : false;
-
-	this.currEnemy.x = isPositiveX ? this.currEnemy.x + this.speed : this.currEnemy.x - this.speed;
-	this.currEnemy.y = isPositiveY ? this.currEnemy.y + this.speed : this.currEnemy.y - this.speed;
-
-
-	if(this.currEnemy.x == this.destinations[this.currDest].x && this.currEnemy.y == this.destinations[this.currDest].y)
-	{
-		this.currDest++;
 	}
 
-	if(this.destinations[this.currDest] == null)
+	en.drawEnemy = function()
 	{
-		enemies.splice(0, 1);
-		stage.removeChild(this.currEnemy);
+		this.image = queue.getResult("imgMonster1");
+		// this.currEnemy = new createjs.Bitmap(queue.getResult("imgMonster1"));
+		var scaleNum = 48/512;
+		this.scaleX = scaleNum;
+		this.scaleY = scaleNum;
+		// this.x = this.startX;
+	 //    this.y = this.startY;
+	    // stage.addChild(this.currEnemy);
+
+		// this.txtTitle = new createjs.Text("E", "50px Arial", "#ff7700");
+
+	 //    this.txtTitle.textAlign = 'center';
+	 //    this.txtTitle.textBaseline = 'middle';
+	 //    this.txtTitle.x = this.startX;
+	 //    this.txtTitle.y = this.startY;
+
+	 //    stage.addChild(this.txtTitle);
 	}
-}
+
+	var isPositiveX, isPositiveY;
+
+	en.move = function()
+	{
+		// console.log("x:" + this.x + ", y:" + this.y);
+		isPositiveX = (this.destinations[this.currDest].x - this.x) > 0 ? true : false;
+		isPositiveY = (this.destinations[this.currDest].y - this.y) > 0 ? true : false;
+
+		this.x = isPositiveX ? this.x + this.speed : this.x - this.speed;
+		this.y = isPositiveY ? this.y + this.speed : this.y - this.speed;
+
+
+		if(this.x == this.destinations[this.currDest].x && this.y == this.destinations[this.currDest].y)
+		{
+			this.currDest++;
+		}
+
+		if(this.destinations[this.currDest] == null)
+		{
+			enemies.splice(0, 1);
+			stage.removeChild(this);
+		}
+	}
+
+window.Enemy = createjs.promote(Enemy, "Bitmap");
+}());
+

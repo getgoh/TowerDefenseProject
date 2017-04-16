@@ -29,6 +29,7 @@ Stage1.prototype.spawnEnemies = function() {
 	for(var x = 1; x <= enemyCount ; x++)
 	{
 		var enemy = new Enemy((x * (-72)), cellWidth);
+		stage.addChild(enemy);
 		enemies.push(enemy);
 	}
 

@@ -11,17 +11,7 @@ function init()
     holder = document.getElementById('holder');
     stage = new createjs.Stage(canvas);
 
-    // set tick speed
-    stage.enableMouseOver(10);
-    createjs.Ticker.setFPS(60);
-    createjs.Ticker.on("tick", update);
 
-    // start the menu
-    //menu = new Menu();
-    // window.enemies = enemies;
-    // enemy1 = new Enemy(400, 500, 600);
-
-    
     //preloader and progressbar
     progressBar();
 
@@ -30,8 +20,7 @@ function init()
 //create the MenuTower
 function drawDashboard()
 {
-    
-    menuTower1 = new MenuTower(1);
+    menuTower1 = new MenuTower(TowersEnum.BASIC);
     creditTxt = new createjs.Text("Credit: " + credit, "20px Arial");
     creditTxt.x = menuTower1.x;
     creditTxt.y = menuTower1.y + 48;
@@ -40,15 +29,22 @@ function drawDashboard()
 }
 
 //
-function update(event) {
+function update(event) 
+{
 
-	// enemy1.move();
-
-    for(var x = 1; x < enemies.length; x++)
+    // enemies
+    for(var x = 0; x < enemies.length; x++)
     {
-        //console.log(enemies[x]);
         enemies[x].move();
+
+        // towers
+        for(var y = 0; y < towers.length; y++)
+        {
+            towers[y].checkIfInRange(enemies[x]);
+        }
     }
+
+    
 
     stage.update();
 }
@@ -88,6 +84,7 @@ function preloader()
     createjs.Sound.initializeDefaultPlugins();
     queue.installPlugin(createjs.Sound);
     queue.addEventListener("complete", finishBar);
+    queue.addEventListener("complete", setupTowerInfo);
     queue.addEventListener("progress", updateBar);
 
     // after pre-load is complete, call themeMusicStart function, which will play the theme music
@@ -130,8 +127,12 @@ function finishBar()
 {
     stage.removeChild(loadingBarContainer);
 
+    // set tick speed
+    stage.enableMouseOver(10);
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.on("tick", update);
+
     // start the menu
     menu = new Menu();
     window.enemies = enemies;
-    // enemy1 = new Enemy(400, 500, 600);
 }

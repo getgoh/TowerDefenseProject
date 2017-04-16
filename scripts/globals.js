@@ -25,7 +25,8 @@ var _menu;
 var enemies = [];
 var towers = [];
 var stage1;
-//used in tower.js
+
+//used in menutower.js
 var _tower;
 
 var menuTower1, menuTower2;
@@ -47,3 +48,49 @@ var themeMusicCtr;
 
 //stage information
 var enemyCount = 10;
+
+
+// constants
+var TowersEnum = {
+	BASIC : 1,
+	ADVANCED : 2,
+	ULTIMATE : 3
+};
+
+var TowerInfo;
+
+function setupTowerInfo()
+{
+	TowerInfo = {
+		BASIC : {
+			rateOfFire : 1,
+			fireRange : 100,
+			price : 100,
+			power : 10,
+			img : queue.getResult("imgt1")
+		},
+		ADVANCED : {
+			rateOfFire : 2,
+			fireRange : 100,
+			price : 120,
+			power : 8,
+			img : queue.getResult("imgt2")
+		},
+		ULTIMATE : {
+			rateOfFire : 1,
+			fireRange : 150,
+			price : 150,
+			power : 15,
+			img : queue.getResult("imgt3")
+		}
+	};
+}
+
+
+
+
+
+
+
+
+

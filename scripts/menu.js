@@ -70,7 +70,7 @@ Menu.prototype.drawButtons = function()
  	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
  	this.instructionsBtn.on("click", this.startGame);
  	this.optionsBtn.on("click", this.menuOptions);
- 	this.exitBtn.on("click", function (e) { alert('EXIT NOW!!'); });
+ 	this.exitBtn.on("click", this.Maps );
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }
@@ -88,7 +88,7 @@ Menu.prototype.Maps = function()
     this.lvl1Btn.x = stage.canvas.width / 2 - 190;
     this.lvl1Btn.y = stage.canvas.height / 2 - 10;
 
-    this.lvl1Btn.on("click", this.startGame);
+    this.lvl1Btn.on("click", _menu.startGame);
 
     // Level 2
     this.lvl2Btn = new createjs.Bitmap(queue.getResult("imgL2"));
