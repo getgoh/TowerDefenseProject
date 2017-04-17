@@ -15,7 +15,7 @@ Stage1.prototype.initialize = function()
 	this.spawnEnemies();
 	this.oldTicks = createjs.Ticker.getTicks();
 	this.enemiesToSpawn = enemyCount;
-	reward = new Reward();
+	// reward = new Reward();
 }
 
 // Current not in use, but leaving here
@@ -30,6 +30,56 @@ Stage1.prototype.setCanvasSize = function()
 Stage1.prototype.update = function ()
 {
     this.spawnEnemies();
+    // this.checkForWin();
+
+    // enemies
+    for(var x = 0; x < enemies.length; x++)
+    {
+        enemies[x].move();
+
+        // towers
+        for(var y = 0; y < towers.length; y++)
+        {
+            if (enemies[x])
+            {
+                towers[y].checkIfInRange(enemies[x]);
+            }
+        }    
+    }
+
+    // bullets
+    for (var b = 0; b < bullets.length; b++) {
+        bullets[b].move();
+    }
+}
+
+Stage1.prototype.checkForWin = function ()
+{
+	if(didStart == true)
+	{
+		if(lives <= 0)
+		{
+			// show lose message, then stop the game
+			testgameover("You lose!");
+			didStart = false;
+		}
+		else if(enemies.length == 0)
+		{
+			// show win message, then stop the game, or start next game, retaining life and money?
+			testgameover("You win!");
+			didStart = false;
+		}		
+	}
+}
+
+var ttm = false;
+function testgameover(msg)
+{
+	if(!ttm)
+	{
+		alert(msg);
+		ttm = true;
+	}
 }
 
 Stage1.prototype.spawnEnemies = function ()
@@ -59,10 +109,10 @@ Stage1.prototype.spawnEnemies = function ()
             this.oldTicks = this.newTicks;
 
             this.enemiesToSpawn--;
+
+    		didStart = true;
         }
     }
-
-
 };
 
 Stage1.prototype.setTable = function()

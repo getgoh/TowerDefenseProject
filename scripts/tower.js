@@ -43,6 +43,7 @@
 		this.fireRange = 	this.towerInfo.fireRange;
 		this.price = 		this.towerInfo.price;
 		this.power = 		this.towerInfo.power;
+		this.bullet = 		this.towerInfo.bullet;
 	}
 
 	_t.drawTower = function()
@@ -63,7 +64,7 @@
 		}
 		else
 		{
-			console.log("NO TARGET: new target!! - " + pEnemy);
+			// console.log("NO TARGET: new target!! - " + pEnemy);
 			// shoot at enemy and set it as current target
 			this.initiateShoot(pEnemy);
 		}
@@ -119,7 +120,7 @@
 				// console.log("tower: " + this.x + ", " + this.y);
 
 				// produce bullet, then add to bullets[] array				
-				var bullet = new Bullet(this.x + 24, this.y + 24, enemy, this.power);
+				var bullet = new Bullet(this.x + 24, this.y + 24, enemy, this.power, this.bullet);
 				stage.addChild(bullet);
 				bullets.push(bullet);
 

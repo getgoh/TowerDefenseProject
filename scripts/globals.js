@@ -33,6 +33,7 @@ var towers = [];
 var bullets = [];
 var stage1;
 var stage2;
+
 //stage2 paths
 var path1 = [
 		{ x: 432, y: 192 },
@@ -59,7 +60,8 @@ var _tower;
 var menuTower1, menuTower2;
 
 // Player currency
-var credit = 500;
+var credit = 300;
+var lives = 5;
 var creditTxt;
 
 // preloader queue
@@ -76,6 +78,7 @@ var themeMusicCtr;
 //stage information
 var enemyCount = 10;
 var currState = null;
+var didStart = false;
 
 
 // constants
@@ -85,30 +88,51 @@ var TowersEnum = {
 	ULTIMATE : 3
 };
 
-var TowerInfo;
+var TowerInfo, BulletInfo;
 
+// need to put this inside function because we need
+// the pre-loader (queue) to finish first
 function setupTowerInfo()
 {
+
+	BulletInfo = {
+		BASIC : {
+			color: "#ff0000",
+			size: 2
+		},
+		ADVANCED : {
+			color: "#11d63b",
+			size: 4
+		},
+		ULTIMATE : {
+			color: "#000000",
+			size: 5
+		}
+	};
+
 	TowerInfo = {
 		BASIC : {
 			rateOfFire : 80,
 			fireRange : 100,
 			price : 100,
 			power : 30,
+			bullet : BulletInfo.BASIC,
 			img : queue.getResult("imgt1")
 		},
 		ADVANCED : {
-			rateOfFire : 2,
+			rateOfFire : 120,
 			fireRange : 100,
 			price : 120,
-			power : 8,
+			power : 50,
+			bullet : BulletInfo.ADVANCED,
 			img : queue.getResult("imgt2")
 		},
 		ULTIMATE : {
-			rateOfFire : 1,
+			rateOfFire : 100,
 			fireRange : 150,
 			price : 150,
-			power : 15,
+			power : 50,
+			bullet : BulletInfo.ULTIMATE,
 			img : queue.getResult("imgt3")
 		}
 	};

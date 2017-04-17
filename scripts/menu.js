@@ -71,8 +71,9 @@ Menu.prototype.drawButtons = function()
  	this.exitBtn.y = this.optionsBtn.y + 60;
 
  	// button listeners
- 	this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
- 	this.instructionsBtn.on("click", this.Maps);
+ 	// this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
+    this.gameBtn.on("click", this.Maps);
+ 	this.instructionsBtn.on("click", function() { alert("Drag towers from the bottom of the screen."); });
  	this.optionsBtn.on("click", this.menuOptions);
  	this.exitBtn.on("click", this.Maps );
 

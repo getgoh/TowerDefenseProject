@@ -7,7 +7,7 @@
 		this.Bitmap_constructor();
 		
 		this.type = type;
-		this.initY = this.y = 9 * 48;
+		this.y = 9 * 48;	
 		this.initialize();
 	}
 
@@ -28,20 +28,19 @@
 	        case TowersEnum.BASIC:
 	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt1"));
 	            this.image = queue.getResult("imgt1");
-				this.initX = this.x = 0;	
+				this.x = 0;	
 	            this.cost = 100;
 	            break;
 	        case TowersEnum.ADVANCED:
 	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt2"));
 	            this.image = queue.getResult("imgt2");
 	            this.cost = 150;
-				this.initX = this.x = 60;	
+				this.x = 48;	
 	            break;
 	        case TowersEnum.ULTIMATE:
 	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt3"));
 	            this.image = queue.getResult("imgt3");
 	            this.cost = 175;
-	            this.initX = this.x = 120;
 	            break;
 	    }
 
@@ -59,24 +58,24 @@
 
 
 	    // preview when dragging the tower
-	    // _mt.previewTower = new createjs.Bitmap(this.image);
-	    // _mt.previewTower.y = this.y;
-	    // _mt.previewTower.x = this.x;
-	    // _mt.previewTower.towerType = 1;
+	    _mt.previewTower = new createjs.Bitmap(this.image);
+	    _mt.previewTower.y = this.y;
+	    _mt.previewTower.x = this.x;
+	    _mt.previewTower.towerType = 1;
 
 	    // listeners for previewTower
-	    this.on("mousedown", this.onMouseDown);
-	    this.on("pressmove", this.dragMove);
-	    this.on("pressup", this.onRelease);
+	    _mt.previewTower.on("mousedown", this.onMouseDown);
+	    _mt.previewTower.on("pressmove", this.onDragged);
+	    _mt.previewTower.on("pressup", this.onRelease);
 
-	    stage.addChild(_mt.placeHelper, this.towerCost);
+	    stage.addChild(_mt.placeHelper, _mt.previewTower, this.towerCost);
 	}
 
 	_mt.onMouseDown = function()
 	{
 		console.log("CLICK");
-		_mt.placeHelper.x = this.x;
-		_mt.placeHelper.y = this.y;
+		_mt.placeHelper.x = _mt.previewTower.x;
+		_mt.placeHelper.y = _mt.previewTower.y;
 		_mt.placeHelper.alpha = 0.6;
 	}
 
@@ -87,14 +86,14 @@
 
 	_mt.dragMove = function()
 	{
-		this.ix = Math.floor(stage.mouseX / 48);
-		this.iy = Math.floor(stage.mouseY / 48);
+		_mt.ix = Math.floor(stage.mouseX / 48);
+		_mt.iy = Math.floor(stage.mouseY / 48);
 
-		this.x0 = this.ix * 48;
-		this.y0 = this.iy * 48;
+		_mt.x0 = this.ix * 48;
+		_mt.y0 = this.iy * 48;
 
-		this.x = _mt.placeHelper.x = this.x0;
-		this.y = _mt.placeHelper.y = this.y0;
+		_mt.previewTower.x = _mt.placeHelper.x = _mt.x0;
+		_mt.previewTower.y = _mt.placeHelper.y = _mt.y0;
 
 		// placement guide
 		// green = can place
@@ -139,19 +138,19 @@
 	    }
 	}
 
-	_mt.onRelease = function()
+	_mt.onRelease = function(ev)
 	{
 		// return preview to initial position 
-		this.y = this.initY;
-		this.x = this.initX;
+		ev.target.y = 9 * 48;
+		ev.target.x = 0;
 
-		// this.towerType = this.towerType;
+		this.towerType = ev.target.towerType;
 
-		this.placeHelper.alpha = 0;
-		this.placeHelper.x = -200;
+		_mt.placeHelper.alpha = 0;
+		_mt.placeHelper.x = -200;
 
 		// out of bounds
-		if(this.iy >= 10 || this.ix >= 20)
+		if(_mt.iy >= 10 || _mt.ix >= 20)
 		{
 			return;
 		}
@@ -160,7 +159,7 @@
 
 
 		// first, check if current position is valid for placement (not in path? no tower already? within bounds?)
-		var canPlace = this.checkLocation(this.iy, this.ix);
+		var canPlace = _mt.checkLocation(_mt.iy, _mt.ix);
 
 		// second, check if credits is enough for tower
 		if(credit < 100)
@@ -169,15 +168,15 @@
 		if(canPlace)
 		{
 		// if above conditions are met, place tower
-			var newTower = new Tower(this.x0, this.y0, this.type);
+			var newTower = new Tower(_mt.x0, _mt.y0, this.type);
 			stage.addChild(newTower);
 
 			// mark position as "1" for "tower"
 			if (stage1) {
-			    stage1.gameTable[this.iy][this.ix] = 1;
+			    stage1.gameTable[_mt.iy][_mt.ix] = 1;
 			}
 			if (stage2) {
-			    stage2.gameTable[this.iy][this.ix] = 1;
+			    stage2.gameTable[_mt.iy][_mt.ix] = 1;
 			}
 
 			towers.push(newTower);

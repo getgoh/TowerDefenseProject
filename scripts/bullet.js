@@ -1,11 +1,12 @@
 
 (function() {
 
-	var Bullet = function(x, y, enemy, damage)
+	var Bullet = function(x, y, enemy, damage, bulletInfo)
 	{
 		this.Shape_constructor();
 		// this.towerType = type;
 		this.hasTarget = false;
+		this.bulletInfo = bulletInfo;
 		this.damage = damage;
 		this.enemy = enemy;
 		this.speed = 5;
@@ -34,7 +35,7 @@
 	_b.initialize = function()
 	{
 		testlog("bullet: " +this.x + ", " + this.y);
-		this.graphics.beginFill("#ff0000").drawCircle(this.startX, this.startY, 5);
+		this.graphics.beginFill(this.bulletInfo.color).drawCircle(this.startX, this.startY, this.bulletInfo.size);
 	}
 
 
@@ -58,7 +59,7 @@
 		//console.log("ThisX" + thisX);
 	    //console.log("thisY" + thisY);
         
-	    if(dist < 5)
+	    if(this.enemy && dist < 5)
 		//if(this.enemy.hitTest(thisX, thisY))
 		{
 			console.log("EH:" + this.enemy.health + ", DAM:" + this.damage);
@@ -66,11 +67,8 @@
 			if(this.enemy.health <= 0)
 			{
 			    this.enemy.kill();
-			    
-
-			    console.log("TEST");
-				// stage.removeChild(this);
-				// this.enemy.kill();
+			    // add credits
+			    addCredit(this.enemy.creditValue);
 			}
 
 			var index = bullets.indexOf(this);
