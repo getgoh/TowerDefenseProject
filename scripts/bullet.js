@@ -8,7 +8,7 @@
 		this.hasTarget = false;
 		this.damage = damage;
 		this.enemy = enemy;
-		this.speed = 0.8;
+		this.speed = 5;
 		this.startX = x;
 		this.startY = y;
 		this.x = 0;

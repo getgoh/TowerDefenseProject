@@ -51,16 +51,16 @@ function update(event)
         // towers
         for(var y = 0; y < towers.length; y++)
         {
-            if(enemies[x])
+            if (enemies[x])
+            {
                 towers[y].checkIfInRange(enemies[x]);
-        }
-
-        // bullets
-        for(var b = 0;b < bullets.length; b++)
-        {
-            if(enemies[x]) 
-                bullets[b].move();
-        }
+            }
+                
+        }    
+    }
+    // bullets
+    for (var b = 0; b < bullets.length; b++) {
+        bullets[b].move();
     }
 
     
