@@ -52,14 +52,23 @@
 
 		// if(thisX == enemyX && thisY == enemyY)
 		// if((thisX == enemyX || thisX < enemyX+5 || thisX > enemyX-5)
-	 //    && (thisY == enemyY || thisY < enemyY+5 || thisY > enemyY-5))
-		if(this.enemy.hitTest(thisX - 24, thisY - 24))
+	    //    && (thisY == enemyY || thisY < enemyY+5 || thisY > enemyY-5))
+		//console.log("enemyx"+this.enemy.x);
+		//console.log("enemyY" + this.enemy.y);
+		//console.log("ThisX" + thisX);
+	    //console.log("thisY" + thisY);
+        
+	    if(dist < 5)
+		//if(this.enemy.hitTest(thisX, thisY))
 		{
 			console.log("EH:" + this.enemy.health + ", DAM:" + this.damage);
 			this.enemy.takeDamage(this.damage);
 			if(this.enemy.health <= 0)
 			{
-				this.enemy.kill();
+			    this.enemy.kill();
+			    
+
+			    console.log("TEST");
 				// stage.removeChild(this);
 				// this.enemy.kill();
 			}

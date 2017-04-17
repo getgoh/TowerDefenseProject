@@ -15,7 +15,7 @@ Reward.prototype.spawnReward = function()
         clearTimeout(time);
     }
     time = setTimeout(this.resetSpawnTime, rewardTime);
-    console.log(rewardTime);
+    //console.log(rewardTime);
 };
 
 Reward.prototype.resetSpawnTime = function()

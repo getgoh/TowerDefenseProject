@@ -72,17 +72,28 @@
 	_t.initiateShoot = function(pEnemy)
 	{
 		// check distance of enemy
-		var dist = this.distance(this, pEnemy);
-		if(dist <= this.getFireRange())
-		{
-			// shoot at enemy
-			this.shoot(pEnemy);
-			this.setTarget(pEnemy);	
-		}
-		else
-		{
-			// console.log("enemy NOT in range: " + pEnemy);
-		}
+	    var dist = this.distance(this, pEnemy);
+	    if (pEnemy.getHealth() > 0 && dist <= this.getFireRange())
+	    {
+	        this.shoot(pEnemy);
+	        this.setTarget(pEnemy);
+	    }
+	    else
+	    {
+	        this.hasTarget = false;
+	        this.target = null;
+	    }
+		//if(dist <= this.getFireRange())
+		//{
+		//	// shoot at enemy
+		//	this.shoot(pEnemy);
+		//	this.setTarget(pEnemy);	
+		//}
+		//else
+		//{
+		//    // console.log("enemy NOT in range: " + pEnemy);
+		//    this.hasTarget = false;
+		//}
 	}
 
 	var tt = true;

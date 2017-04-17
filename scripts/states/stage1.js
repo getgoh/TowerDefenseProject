@@ -55,7 +55,6 @@ Stage1.prototype.spawnEnemies = function ()
         if (this.newTicks - this.oldTicks >= 60) {
             var enemy = new Enemy(0, cellWidth, area);
             stage.addChild(enemy);
-            console.log(enemy);
             enemies.push(enemy);
             this.oldTicks = this.newTicks;
 

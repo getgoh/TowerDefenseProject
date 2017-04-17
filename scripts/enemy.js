@@ -66,9 +66,18 @@
 	}
 
 	en.kill = function()
-	{
-		enemies.splice(0, 1);
+	{	    
+	    var index = enemies.indexOf(this);
+	    if (index > -1) {
+	        enemies.splice(index, 1);
+	    }
+		
 		stage.removeChild(this);
+	}
+
+	en.hitTest = function(hitX, hitY)
+	{
+	    return (hitX >= this.x+10 && hitX <= this.x + 38 && hitY >= this.y+10 && hitY <= this.y + 38);
 	}
 
 window.Enemy = createjs.promote(Enemy, "Bitmap");
