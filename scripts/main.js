@@ -111,8 +111,14 @@ function preloader()
 
     // pre-load sound files
     createjs.Sound.alternateExtensions = ["mp3"];
-    queue.loadFile({id: "theme", src: "sounds/opening.mp3"},
-                   {id: "gameTheme", src: "sounds/game.mp3"});
+    queue.loadFile({id: "theme", src: "sounds/opening.mp3"});
+    queue.loadFile({ id: "gameTheme", src: "sounds/game.mp3" });
+
+    queue.loadFile({ id: "itemSpawnSound", src: "sounds/itemSpawn.mp3"});
+    queue.loadFile({ id: "itemUseSound", src: "sounds/itemUse.mp3" });
+
+    queue.loadFile({ id: "enemySound", src: "sounds/spawnEnemy.mp3"});
+    queue.loadFile({ id: "bossSound", src: "sounds/spawnBoss.mp3" });
 
     // pre-load images
     queue.loadManifest([
@@ -126,6 +132,7 @@ function preloader()
         { id: "imgt1", src: "images/t1-new.png" },
         { id: "imgt2", src: "images/t2.png" },
         { id: "imgt3", src: "images/t3.png" },
+        { id: "imgMoney", src: "images/money-bag.png" },
         { id: "imgMonster1", src: "images/monster1-new.png" },
         { id: "imgMonster2", src: "images/boss.png" },
         { id: "imgSounds", src: "images/btnSounds.png" },

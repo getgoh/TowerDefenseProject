@@ -21,6 +21,12 @@ var menu;
 // used in menu.js
 var _menu;
 
+// used in reward.js
+var reward;
+var _reward;
+var rewardTime = 1000;
+var time;
+
 // game object collections
 var enemies = [];
 var towers = [];

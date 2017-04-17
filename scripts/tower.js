@@ -140,7 +140,14 @@
 
 	_t.onSelectTower = function()
 	{
-		this._rangeCircle.alpha = 1;
+	    if (this._rangeCircle.alpha == 1)
+	    {
+	        this._rangeCircle.alpha = 0;
+	    }
+	    else
+	    {
+	        this._rangeCircle.alpha = 1
+	    }
 	}
 
 	_t.createRangeCircle = function () 

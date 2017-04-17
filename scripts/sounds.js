@@ -14,3 +14,13 @@ function themeMusicToggle()
 
 	shouldPlayThemeMusic = !shouldPlayThemeMusic;
 }
+
+function rewardSpawnSound()
+{
+    createjs.Sound.play("itemSpawnSound");
+}
+
+function rewardGetSound()
+{
+    createjs.Sound.play("itemUseSound");
+}

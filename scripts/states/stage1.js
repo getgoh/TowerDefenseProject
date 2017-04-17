@@ -15,6 +15,7 @@ Stage1.prototype.initialize = function()
 	this.spawnEnemies();
 	this.oldTicks = createjs.Ticker.getTicks();
 	this.enemiesToSpawn = enemyCount;
+	reward = new Reward();
 }
 
 // Current not in use, but leaving here
