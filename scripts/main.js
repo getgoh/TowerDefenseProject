@@ -104,7 +104,7 @@ function optionsMenu()
     this.btnMainMenu.cursor = "pointer";
     this.btnMainMenu.x = stage.canvas.width / 2 - 78;
     this.btnMainMenu.y = this.backBtn.y + 60;
-    this.btnMainMenu.on("click", function () { menu.initialize(); waveNumber = 0; currState = menu; pauseToggle(); });
+    this.btnMainMenu.on("click", function () { menu.initialize(); waveNumber = 0; currState = menu; pauseToggle(); score = 300; });
 
 
     this.backBtn.on("click", 
@@ -113,7 +113,6 @@ function optionsMenu()
             stage.removeChild(menuContainer);
             stage.update();
             currState.setTicks();
-            shouldSpawnReward = !shouldSpawnReward;
             pauseToggle();
         });
 
