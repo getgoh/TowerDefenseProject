@@ -13,7 +13,7 @@ Stage2.prototype.initialize = function () {
     this.spawnEnemies();
     this.oldTicks = createjs.Ticker.getTicks();
     this.enemiesToSpawn = enemyCount;
-    reward = new Reward();
+    //reward = new Reward();
 }
 
 // Current not in use, but leaving here
@@ -26,51 +26,73 @@ Stage2.prototype.setCanvasSize = function () {
 
 Stage2.prototype.update = function () {
     this.spawnEnemies();
+    // this.checkForWin();
+
+    // enemies
+    for (var x = 0; x < enemies.length; x++) {
+        enemies[x].move();
+
+        // towers
+        for (var y = 0; y < towers.length; y++) {
+            if (enemies[x]) {
+                towers[y].checkIfInRange(enemies[x]);
+            }
+        }
+    }
+
+    // bullets
+    for (var b = 0; b < bullets.length; b++) {
+        bullets[b].move();
+    }
+}
+
+Stage2.prototype.checkForWin = function () {
+    if (didStart == true) {
+        if (lives <= 0) {
+            // show lose message, then stop the game
+            testgameover("You lose!");
+            didStart = false;
+        }
+        else if (enemies.length == 0) {
+            // show win message, then stop the game, or start next game, retaining life and money?
+            testgameover("You win!");
+            didStart = false;
+        }
+    }
+}
+
+var ttm = false;
+function testgameover(msg) {
+    if (!ttm) {
+        alert(msg);
+        ttm = true;
+    }
 }
 
 Stage2.prototype.spawnEnemies = function () {
-
     for (var x = 1; x <= enemyCount ; x++) {
-
-        var rand = Math.floor((Math.random() * 10) + 1);
-
-        if (rand % 2 == 0) {
-            if (this.enemiesToSpawn > 0) {
-                this.newTicks = createjs.Ticker.getTicks();
-                if (this.newTicks - this.oldTicks >= 60) {
-                    var enemy = new Enemy(cellWidth * 9, 0, path1);
-                    stage.addChild(enemy);
-                    console.log(enemy);
-                    enemies.push(enemy);
-                    this.oldTicks = this.newTicks;
-
-                    this.enemiesToSpawn--;
+        if (this.enemiesToSpawn > 0) {
+            this.newTicks = createjs.Ticker.getTicks();
+            if (this.newTicks - this.oldTicks >= 60) {
+                if (Math.random() < 0.5) {
+                    this.spawnEnemyOnPath(path1);
+                }
+                else {
+                    this.spawnEnemyOnPath(path2);
                 }
             }
-
-            //var enemy = new Enemy(cellWidth * 9, x * (-72), path1);
-            //enemies.push(enemy);
-        }
-        else {
-            if (this.enemiesToSpawn > 0) {
-                this.newTicks = createjs.Ticker.getTicks();
-                if (this.newTicks - this.oldTicks >= 60) {
-                    var enemy = new Enemy(cellWidth * 9, 0, path2);
-                    stage.addChild(enemy);
-                    console.log(enemy);
-                    enemies.push(enemy);
-                    this.oldTicks = this.newTicks;
-
-                    this.enemiesToSpawn--;
-                }
-            }
-            //var enemy = new Enemy(cellWidth * 9, x * (-72), path2);
-            //enemies.push(enemy);
-        }
-        console.log(enemy)
-        stage.addChild(enemy);
+        }  
     }
-    
+};
+
+Stage2.prototype.spawnEnemyOnPath = function (path) {    
+    var enemy = new Enemy(cellWidth * 9, 0, path);
+    stage.addChild(enemy);
+    enemies.push(enemy);
+    this.oldTicks = this.newTicks;
+    this.enemiesToSpawn--;
+
+    didStart = true;
 };
 
 Stage2.prototype.setTable = function () {
