@@ -99,7 +99,7 @@
 		// placement guide
 		// green = can place
 		// red = cannot place
-		if(_mt.iy < 10 && _mt.ix < 20)
+		if(this.iy < 10 && this.ix < 20)
 		{
 			if(this.checkLocation(this.iy, this.ix))
 			{
@@ -123,15 +123,15 @@
 
 	_mt.checkLocation = function(row, col)
 	{
-	    if (stage1) {
-	        console.log(row);
+	    if (currState === stage1) {
+	        console.log("s1" + row);
 	        if (stage1.gameTable[row][col] != 0) {
 	            return false;
 	        }
 	        return true;
 	    }
-	    if (stage2) {
-	        console.log(row);
+	    else if (currState === stage2) {
+	        console.log("s2" + row);
 	        if (stage2.gameTable[row][col] != 0) {
 	            return false;
 	        }
