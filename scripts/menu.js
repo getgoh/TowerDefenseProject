@@ -85,7 +85,7 @@ Menu.prototype.drawButtons = function()
         var getUrl = window.location;
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
         // console.log(baseUrl);
-        window.location = baseUrl + "images/closed_image.png"; 
+        window.location = baseUrl + "/images/closed_image.png"; 
     } );
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
