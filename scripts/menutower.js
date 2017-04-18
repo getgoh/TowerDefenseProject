@@ -34,13 +34,13 @@
 	        case TowersEnum.ADVANCED:
 	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt2"));
 	            this.image = queue.getResult("imgt2");
-	            this.cost = 150;
+	            this.cost = 120;
 				this.initX = this.x = 60;	
 	            break;
 	        case TowersEnum.ULTIMATE:
 	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt3"));
 	            this.image = queue.getResult("imgt3");
-	            this.cost = 175;
+	            this.cost = 120;
 	            this.initX = this.x = 120;
 	            break;
 	    }

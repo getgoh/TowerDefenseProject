@@ -15,7 +15,21 @@ Stage1.prototype.initialize = function()
 	this.spawnEnemies();
 	this.oldTicks = createjs.Ticker.getTicks();
 	this.enemiesToSpawn = enemyCounts[waveNumber];
+	this.tickStamp = createjs.Ticker.getTicks();
 	// reward = new Reward();
+
+	// music
+	themeMusicForStage();
+}
+
+Stage1.prototype.saveTicks = function()
+{
+	this.tickStamp = createjs.Ticker.getTicks();
+}
+
+Stage1.prototype.setTicks = function()
+{
+	this.oldTicks += createjs.Ticker.getTicks() - this.tickStamp;
 }
 
 // Current not in use, but leaving here
@@ -61,6 +75,7 @@ Stage1.prototype.checkForWin = function ()
 		{
 			// show lose message, then stop the game
 			testgameover("You lose!");
+			pauseToggle();
 			didStart = false;
 		}
 		else if(enemies.length == 0 && this.enemiesToSpawn == 0)
@@ -70,6 +85,7 @@ Stage1.prototype.checkForWin = function ()
 		    this.enemiesToSpawn = enemyCounts[waveNumber];
 		    if(this.enemiesToSpawn == 0) {
 		        testgameover("You win!");
+		        pauseToggle();
 		    }
 			didStart = false;
 		}		
@@ -109,7 +125,12 @@ Stage1.prototype.spawnEnemies = function ()
     //}
 
     if (this.enemiesToSpawn > 0) {
-        this.newTicks = createjs.Ticker.getTicks();
+
+    	this.newTicks = createjs.Ticker.getTicks();
+
+    	// console.log("Newticks: " + this.newTicks + ", Oldticks: " + this.oldTicks);
+
+        
         if (this.newTicks - this.oldTicks >= 60) {
             var enemy = this.returnEnemyType(area, waveNumber);
             stage.addChild(enemy);
@@ -126,21 +147,27 @@ Stage1.prototype.spawnEnemies = function ()
 Stage1.prototype.returnEnemyType = function (area, wave) {
     switch (wave) {
         case 0:
+            spawnEnemySound();
             return new Enemy(0, cellWidth, area);
             break;
         case 1:
+            spawnEnemySound();
             return new Enemy(0, cellWidth, area);
             break;
         case 2:
-            return new Enemy(0, cellWidth, area, 2, 200, "imgMonster2");
+            spawnEnemySound();
+            return new Enemy(0, cellWidth, area, 1.5, 200, "imgMonster2");
             break;
         case 3:
+            spawnEnemySound();
             return new Enemy(0, cellWidth, area, 2, 200, "imgMonster2");
             break;
         case 4:
+            spawnBossSound();
             return new Enemy(0, cellWidth, area, 1, 2000, "imgMonster3");
             break;
         default:
+            spawnEnemySound();
             return new Enemy(0, cellWidth, area);
             break;
     }

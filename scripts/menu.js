@@ -13,9 +13,15 @@ var Menu = function()
 // init function
 Menu.prototype.initialize = function()
 {
+    console.log("MENU INIT");
 	stage.removeAllChildren(); 
-	this.drawText();
+	this.drawText("Tower PewPew");
 	this.drawButtons();
+    enemies = [];
+    towers = [];
+    bullets = [];
+    lives = 5;
+    credit = 300;
 }
 
 Menu.prototype.update = function ()
@@ -31,9 +37,9 @@ Menu.prototype.setCanvasSize = function()
 }
 
 // creates title
-Menu.prototype.drawText = function()
+Menu.prototype.drawText = function(txt)
 {
-	this.txtTitle = new createjs.Text("Tower PewPew", "50px Arial", "#ff7700");
+	this.txtTitle = new createjs.Text(txt, "50px Arial", "#ff7700");
 
     this.txtTitle.textAlign = 'center';
     this.txtTitle.textBaseline = 'middle';
@@ -73,38 +79,85 @@ Menu.prototype.drawButtons = function()
  	// button listeners
  	// this.gameBtn.on("click", function(e) { window.location.href = "towerdefense.html"; });
     this.gameBtn.on("click", this.Maps);
- 	this.instructionsBtn.on("click", function() { alert("Drag towers from the bottom of the screen."); });
+ 	this.instructionsBtn.on("click", this.Instructions);
  	this.optionsBtn.on("click", this.menuOptions);
  	this.exitBtn.on("click", this.Maps );
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }
 
+Menu.prototype.Instructions = function()
+{
+    stage.removeAllChildren();
+
+    this.instructionsTitle = new createjs.Text("Instructions", "50px Arial", "#ff7700");
+
+    this.instructionsTitle.textAlign = 'center';
+    this.instructionsTitle.textBaseline = 'middle';
+    this.instructionsTitle.x = stage.canvas.width/2;
+    this.instructionsTitle.y = stage.canvas.height/4 - 60;
+
+    this.instructionsTxt1 = new createjs.Text("Drag towers from the bottom of the screen to play.", "20px Arial");
+    this.instructionsTxt1.x = stage.canvas.width/2;
+    this.instructionsTxt1.y = this.instructionsTitle.y + 50;
+    this.instructionsTxt1.textAlign = 'center';
+    this.instructionsTxt1.textBaseline = 'middle';
+
+    this.instructionsTxt3 = new createjs.Text("An outline guide will show if a tower can be placed on the selected block. Green means it can be placed and red means not.", "20px Arial");
+    this.instructionsTxt3.x = stage.canvas.width/2;
+    this.instructionsTxt3.lineWidth = stage.canvas.width - 200;
+    this.instructionsTxt3.y = this.instructionsTxt1.y + 50;
+    this.instructionsTxt3.textAlign = 'center';
+    this.instructionsTxt3.textBaseline = 'middle';
+
+    this.instructionsTxt4 = new createjs.Text("Click on a placed tower to see its range.", "20px Arial");
+    this.instructionsTxt4.lineWidth = stage.canvas.width - 200;
+    this.instructionsTxt4.x = stage.canvas.width/2;
+    this.instructionsTxt4.y = this.instructionsTxt3.y + 80;
+    this.instructionsTxt4.textAlign = 'center';
+    this.instructionsTxt4.textBaseline = 'middle';
+
+    this.instructionsTxt2 = new createjs.Text("Each enemy wave will be harder than the previous one, ultimately leading to the boss wave!", "20px Arial");
+    this.instructionsTxt2.lineWidth = stage.canvas.width - 200;
+    this.instructionsTxt2.x = stage.canvas.width/2;
+    this.instructionsTxt2.y = this.instructionsTxt4.y + 50;
+    this.instructionsTxt2.textAlign = 'center';
+    this.instructionsTxt2.textBaseline = 'middle';
+
+    this.btnBack = new createjs.Bitmap(queue.getResult("imgBack2"));
+    this.btnBack.cursor = "pointer";
+    this.btnBack.x = stage.canvas.width / 2 - 43;
+    this.btnBack.y = this.instructionsTxt2.y + 50;
+    this.btnBack.on("click", function () { _menu.initialize(); });
+
+    stage.addChild(this.instructionsTxt1, this.instructionsTxt3, this.instructionsTxt2, this.instructionsTxt4, this.btnBack, this.instructionsTitle);
+
+}
 
 Menu.prototype.Maps = function()
 {
     stage.removeAllChildren();
 
-    Menu.prototype.drawText();
+    Menu.prototype.drawText("Options");
 
     // Level 1
     this.lvl1Btn = new createjs.Bitmap(queue.getResult("imgL1"));
     this.lvl1Btn.cursor = "pointer";
-    this.lvl1Btn.x = stage.canvas.width / 2 - 190;
+    this.lvl1Btn.x = stage.canvas.width / 2 - (109 + 109/2);
     this.lvl1Btn.y = stage.canvas.height / 2 - 10;
     this.lvl1Btn.on("click", _menu.startGame);
 
     // Level 2
     this.lvl2Btn = new createjs.Bitmap(queue.getResult("imgL2"));
     this.lvl2Btn.cursor = "pointer";
-    this.lvl2Btn.x = stage.canvas.width / 2 + 34;
+    this.lvl2Btn.x = stage.canvas.width / 2 + (109/2);
     this.lvl2Btn.y = stage.canvas.height / 2 - 10;
     this.lvl2Btn.on("click", _menu.startTwo);
 
     //return to Menu button
     this.menuBtn = new createjs.Bitmap(queue.getResult("imgMenu"));
     this.menuBtn.cursor = "pointer";
-    this.menuBtn.x = stage.canvas.width / 2 - 70;
+    this.menuBtn.x = stage.canvas.width / 2 - 78;
     this.menuBtn.y = stage.canvas.height / 2 + 50;
     this.menuBtn.on("click", function () { _menu.initialize(); });
 
@@ -146,6 +199,8 @@ Menu.prototype.menuOptions = function()
     this.soundsBtn.cursor = "pointer";
     this.soundsBtn.x = stage.canvas.width / 2 + 34;
     this.soundsBtn.y = stage.canvas.height / 2 - 10;
+
+    this.soundsBtn.on("click", soundEffectsToggle);
 
     //return to Menu button
     this.menuBtn = new createjs.Bitmap(queue.getResult("imgMenu"));

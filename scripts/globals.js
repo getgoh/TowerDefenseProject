@@ -76,11 +76,16 @@ var loadingBar;
 var shouldPlayThemeMusic = true;
 var themeMusicCtr;
 
+// sound effect toggle
+var shouldPlaySoundEffect = true;
+
 //stage information
 
 var enemyCounts = [8, 10, 8, 10, 1, 0];
 var currState = null;
 var didStart = false;
+var isPaused = false;
+var currTower = null;
 
 
 // constants
@@ -130,10 +135,10 @@ function setupTowerInfo()
 			img : queue.getResult("imgt2")
 		},
 		ULTIMATE : {
-			rateOfFire : 100,
-			fireRange : 150,
-			price : 150,
-			power : 50,
+			rateOfFire : 80,
+			fireRange : 200,
+			price : 120,
+			power : 30,
 			bullet : BulletInfo.ULTIMATE,
 			img : queue.getResult("imgt3")
 		}

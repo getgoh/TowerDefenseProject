@@ -13,7 +13,22 @@ Stage2.prototype.initialize = function () {
     this.spawnEnemies();
     this.oldTicks = createjs.Ticker.getTicks();
     this.enemiesToSpawn = enemyCounts[waveNumber];
+    this.tickStamp = createjs.Ticker.getTicks();
+    
     //reward = new Reward();
+
+    // music
+    themeMusicForStage();
+}
+
+Stage2.prototype.saveTicks = function()
+{
+    this.tickStamp = createjs.Ticker.getTicks();
+}
+
+Stage2.prototype.setTicks = function()
+{
+    this.oldTicks += createjs.Ticker.getTicks() - this.tickStamp;
 }
 
 // Current not in use, but leaving here
@@ -90,6 +105,16 @@ Stage2.prototype.spawnEnemies = function () {
 };
 
 Stage2.prototype.returnEnemyType = function (area, wave) {
+
+    if(wave === 4)
+    {
+        spawnBossSound();   
+    }
+    else
+    {
+        spawnEnemySound();
+    }
+
     switch (wave) {
         case 0:
             return new Enemy(cellWidth * 9, 0, area, 1, 10);

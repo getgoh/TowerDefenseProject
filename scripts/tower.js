@@ -50,7 +50,7 @@
 	{
 		this.createRangeCircle();
 
-		this.on("click", this.onSelectTower);
+		this.on("click", this.showRangeCircle);
 	}
 
 	_t.checkIfInRange = function(pEnemy)
@@ -160,6 +160,35 @@
 	    {
 	        this._rangeCircle.alpha = 1
 	    }
+	}
+
+	_t.showRangeCircle = function()
+	{
+		if(currTower != null)
+		{
+			if(currTower === this)
+			{
+				if (this._rangeCircle.alpha == 1)
+			    {
+			        this._rangeCircle.alpha = 0;
+			    }
+			    else
+			    {
+			        this._rangeCircle.alpha = 1
+			    }
+			}
+			else
+			{
+				currTower._rangeCircle.alpha = 0;
+				currTower = this;
+				this._rangeCircle.alpha = 1;
+			}
+		}		
+		else
+		{
+			currTower = this;
+			this._rangeCircle.alpha = 1;
+		}
 	}
 
 	_t.createRangeCircle = function () 
