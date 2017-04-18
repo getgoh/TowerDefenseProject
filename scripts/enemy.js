@@ -41,8 +41,10 @@
 		this.healthBar = new createjs.Shape();
 		this.healthBarBG = new createjs.Shape();
 
-	    this.healthBar.graphics.beginFill("#2bd61b").drawRect(this.x, this.y - 4, 48, 5);
-	    this.healthBarBG.graphics.beginFill("#bc0b0b").drawRect(this.x, this.y - 4, 48, 5);
+	    // this.healthBar.graphics.beginFill("#2bd61b").drawRect(this.x, this.y - 4, 48, 5);
+	    // this.healthBarBG.graphics.beginFill("#bc0b0b").drawRect(this.x, this.y - 4, 48, 5);
+	    this.healthBar.graphics.beginFill("#2bd61b").drawRect(0, 0, 48, 5);
+	    this.healthBarBG.graphics.beginFill("#bc0b0b").drawRect(0, 0, 48, 5);
 
 	    stage.addChild(this.healthBarBG, this.healthBar);
 	}
@@ -57,17 +59,19 @@
 
 		// this cleans up the wobbly movement of enemy
 		// we can remove it to make the enemy movement look less programmed
+
 		if(this.x != this.destinations[this.currDest].x)
 		{
 			this.x = isPositiveX ? this.x + this.speed : this.x - this.speed;
-			this.healthBar.x = this.healthBarBG.x = this.x;
+			
 		}
+		this.healthBar.x = this.healthBarBG.x = this.x;
 		// this cleans up the wobbly movement of enemy
 		if(this.y != this.destinations[this.currDest].y)
 		{
 			this.y = isPositiveY ? this.y + this.speed : this.y - this.speed;
-			this.healthBar.y = this.healthBarBG.y = this.y - 48;
 		}
+		this.healthBar.y = this.healthBarBG.y = this.y - 5;
 
 
 		if(this.x == this.destinations[this.currDest].x && this.y == this.destinations[this.currDest].y)

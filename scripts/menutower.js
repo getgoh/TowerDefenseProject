@@ -163,7 +163,7 @@
 		var canPlace = this.checkLocation(this.iy, this.ix);
 
 		// second, check if credits is enough for tower
-		if(credit < 100)
+		if(credit < this.cost)
 			return;
 
 		if(canPlace)
@@ -183,7 +183,7 @@
 			towers.push(newTower);
 
 			// after placing, deduct price of tower from credit
-			credit -= 100;
+			credit -= this.cost;
 			creditTxt.text = "Credit: " + credit;
 		}
 	}
