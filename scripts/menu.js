@@ -81,7 +81,12 @@ Menu.prototype.drawButtons = function()
     this.gameBtn.on("click", this.Maps);
  	this.instructionsBtn.on("click", this.Instructions);
  	this.optionsBtn.on("click", this.menuOptions);
- 	this.exitBtn.on("click", this.Maps );
+ 	this.exitBtn.on("click", function() { 
+        var getUrl = window.location;
+        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+        // console.log(baseUrl);
+        window.location = baseUrl + "images/closed_image.png"; 
+    } );
 
  	stage.addChild(this.gameBtn, this.instructionsBtn, this.optionsBtn, this.exitBtn);
 }

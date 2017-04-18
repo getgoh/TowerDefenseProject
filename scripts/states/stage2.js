@@ -15,7 +15,7 @@ Stage2.prototype.initialize = function () {
     this.enemiesToSpawn = enemyCounts[waveNumber];
     this.tickStamp = createjs.Ticker.getTicks();
     
-    //reward = new Reward();
+    reward = new Reward();
 
     // music
     themeMusicForStage();

@@ -34,6 +34,7 @@ Reward.prototype.displayReward = function()
     _reward.removeReward();
 
     _reward.image = new createjs.Bitmap(queue.getResult("imgMoney"));
+    _reward.image.scaleX = _reward.image.scaleY = 1.5;
     _reward.image.x = (stage.canvas.width - _reward.image.getBounds().width) * Math.random();
     _reward.image.y = (stage.canvas.height - _reward.image.getBounds().height) * Math.random();
     //when click addreward called to add the rewards taken
