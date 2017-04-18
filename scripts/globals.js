@@ -35,6 +35,7 @@ var bullets = [];
 var stage1;
 var stage2;
 
+
 //stage2 paths
 var path1 = [
 		{ x: 432, y: 192 },
@@ -64,6 +65,8 @@ var menuTower1, menuTower2;
 var credit = 300;
 var lives = 5;
 var creditTxt;
+var score = 300;
+var scoreTxt;
 
 // preloader queue
 var queue;

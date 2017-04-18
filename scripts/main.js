@@ -36,6 +36,11 @@ function drawDashboard()
     creditTxt.x = menuTower1.x;
     creditTxt.y = menuTower1.y + 65;
 
+    // score
+    scoreTxt = new createjs.Text("Score: " + score, "20px Arial");
+    scoreTxt.x = menuTower1.x;
+    scoreTxt.y = menuTower1.y + 115;
+
     // lives
     txtLives = new createjs.Text("Lives: " + lives, "20px Arial");
     txtLives.x = menuTower1.x;
@@ -49,7 +54,7 @@ function drawDashboard()
     this.btnPause.on("click", optionsMenu);
 
 
-    stage.addChild(creditTxt, txtLives, this.btnPause);
+    stage.addChild(creditTxt, txtLives, scoreTxt, this.btnPause);
 }
 
 var menuContainer;
@@ -122,7 +127,13 @@ function pauseToggle()
 function addCredit(amt)
 {
     credit += amt;
+    score += (amt * (10 * waveNumber));
+    if (waveNumber == 4)
+    {
+        score += 10000;
+    }
     creditTxt.text = "Credits: " + credit;
+    scoreTxt.text = "Score: " + score;
 }
 
 //

@@ -74,7 +74,7 @@ Stage1.prototype.checkForWin = function ()
 		if(lives <= 0)
 		{
 			// show lose message, then stop the game
-			testgameover("You lose!");
+			testgameover("You lose! Your score is " + score);
 			pauseToggle();
 			didStart = false;
 		}
@@ -84,7 +84,7 @@ Stage1.prototype.checkForWin = function ()
 		    waveNumber++;
 		    this.enemiesToSpawn = enemyCounts[waveNumber];
 		    if(this.enemiesToSpawn == 0) {
-		        testgameover("You win!");
+		        testgameover("You win! Your score is " + score);
 		        pauseToggle();
 		    }
 			didStart = false;

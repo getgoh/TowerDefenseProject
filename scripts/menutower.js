@@ -184,7 +184,9 @@
 
 			// after placing, deduct price of tower from credit
 			credit -= this.cost;
+			score -= (this.cost * 12);
 			creditTxt.text = "Credit: " + credit;
+			scoreTxt.text = "Score: " + score;
 		}
 	}
 
