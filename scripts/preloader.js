@@ -78,6 +78,7 @@
             { id: "imgMusic", src: "images/btnMusic.png" },
             { id: "imgBack", src: "images/btnBack.png" }, 
             { id: "imgBack2", src: "images/btnBack2.png" },
+            { id: "imgPlayAgain", src: "images/btnPlayAgain.png" },
             { id: "imgPause", src: "images/btnPause.png" }
         ]);
 

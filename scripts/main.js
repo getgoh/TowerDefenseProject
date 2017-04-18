@@ -124,6 +124,55 @@ function optionsMenu()
     pauseToggle();
 }
 
+
+function gameOverMenu()
+{
+    stage.removeAllChildren();
+
+    this.txtGameOver = new createjs.Text("Game over!" , "50px Arial");
+    this.txtGameOver.textAlign = 'center';
+    this.txtGameOver.textBaseline = 'middle';
+    this.txtGameOver.x = stage.canvas.width / 2;
+    this.txtGameOver.y = stage.canvas.height / 2;
+
+    this.txtScoreOver = new createjs.Text("Your score: " + score , "50px Arial");
+    this.txtScoreOver.textAlign = 'center';
+    this.txtScoreOver.textBaseline = 'middle';
+    this.txtScoreOver.x = stage.canvas.width / 2;
+    this.txtScoreOver.y = this.txtGameOver.y + 60;
+
+    // return to main menu button
+    this.btnMainMenu = new createjs.Bitmap(queue.getResult("imgMenu"));
+    this.btnMainMenu.cursor = "pointer";
+    this.btnMainMenu.x = stage.canvas.width / 2 - 78;
+    this.btnMainMenu.y = this.txtScoreOver.y + 60;
+    this.btnMainMenu.on("click", function () { menu.initialize(); waveNumber = 0; lives = 5; currState = menu; pauseToggle(); score = 300; });    
+
+    // return to main menu button
+    this.btnPlayAgain = new createjs.Bitmap(queue.getResult("imgPlayAgain"));
+    this.btnPlayAgain.cursor = "pointer";
+    this.btnPlayAgain.x = stage.canvas.width / 2 - 78;
+    this.btnPlayAgain.y = this.btnMainMenu.y + 60;
+    this.btnPlayAgain.on("click", function () { 
+
+        pauseToggle();
+        waveNumber = 0; 
+        score = 300;
+        lives = 5;
+        if(currState === stage1)
+        {
+            menu.startGame();
+        }
+        else
+        {
+            menu.startTwo();
+        }
+
+     });    
+
+    stage.addChild(this.txtGameOver, this.txtScoreOver, this.btnMainMenu, this.btnPlayAgain);
+}
+
 function pauseToggle()
 {
     var paused = !createjs.Ticker.getPaused();

@@ -66,6 +66,11 @@ Stage2.prototype.checkForWin = function () {
         if (lives <= 0) {
             // show lose message, then stop the game
             testgameover("You lose! Your score is " + score);
+            enemies = [];
+            towers = [];
+            bullets = [];
+            gameOverMenu();
+            pauseToggle();
             didStart = false;
         }
         else if (enemies.length == 0 && this.enemiesToSpawn == 0) {
@@ -73,7 +78,13 @@ Stage2.prototype.checkForWin = function () {
             waveNumber++;
             this.enemiesToSpawn = enemyCounts[waveNumber];
             if (this.enemiesToSpawn == 0) {
+                
+                enemies = [];
+                towers = [];
+                bullets = [];
                 testgameover("You win! Your score is " + score);
+                gameOverMenu();
+                pauseToggle();
             }
             didStart = false;
         }
