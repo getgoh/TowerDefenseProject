@@ -63,6 +63,13 @@ var menuContainer;
 function optionsMenu()
 {   
     menuContainer = new createjs.Container();
+    
+    if (time) {
+        clearTimeout(time);
+        rewardTime = 1000;
+    }
+
+    //shouldSpawnReward = !shouldSpawnReward;
 
     // stage.removeAllChildren();
     this.backScreen = new createjs.Shape();
@@ -97,7 +104,7 @@ function optionsMenu()
     this.btnMainMenu.cursor = "pointer";
     this.btnMainMenu.x = stage.canvas.width / 2 - 78;
     this.btnMainMenu.y = this.backBtn.y + 60;
-    this.btnMainMenu.on("click", function() { menu.initialize(); currState = menu; pauseToggle(); });
+    this.btnMainMenu.on("click", function () { menu.initialize(); waveNumber = 0; currState = menu; pauseToggle(); score = 300; });
 
 
     this.backBtn.on("click", 
