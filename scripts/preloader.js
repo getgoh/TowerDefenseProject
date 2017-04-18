@@ -72,7 +72,8 @@
             { id: "imgt3", src: "images/t3.png" },
             { id: "imgMoney", src: "images/money-bag.png" },
             { id: "imgMonster1", src: "images/monster1-new.png" },
-            { id: "imgMonster2", src: "images/boss.png" },
+            { id: "imgMonster2", src: "images/monster2.png" },
+            { id: "imgMonster3", src: "images/boss.png" },
             { id: "imgSounds", src: "images/btnSounds.png" },
             { id: "imgMusic", src: "images/btnMusic.png" }
         ]);

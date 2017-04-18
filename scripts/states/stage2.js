@@ -12,7 +12,7 @@ Stage2.prototype.initialize = function () {
     this.drawMap();
     this.spawnEnemies();
     this.oldTicks = createjs.Ticker.getTicks();
-    this.enemiesToSpawn = enemyCount;
+    this.enemiesToSpawn = enemyCounts[waveNumber];
     //reward = new Reward();
 }
 
@@ -26,7 +26,7 @@ Stage2.prototype.setCanvasSize = function () {
 
 Stage2.prototype.update = function () {
     this.spawnEnemies();
-    // this.checkForWin();
+    this.checkForWin();
 
     // enemies
     for (var x = 0; x < enemies.length; x++) {
@@ -53,9 +53,13 @@ Stage2.prototype.checkForWin = function () {
             testgameover("You lose!");
             didStart = false;
         }
-        else if (enemies.length == 0) {
+        else if (enemies.length == 0 && this.enemiesToSpawn == 0) {
             // show win message, then stop the game, or start next game, retaining life and money?
-            testgameover("You win!");
+            waveNumber++;
+            this.enemiesToSpawn = enemyCounts[waveNumber];
+            if (this.enemiesToSpawn == 0) {
+                testgameover("You win!");
+            }
             didStart = false;
         }
     }
@@ -70,7 +74,7 @@ function testgameover(msg) {
 }
 
 Stage2.prototype.spawnEnemies = function () {
-    for (var x = 1; x <= enemyCount ; x++) {
+    for (var x = 1; x <= enemyCounts[waveNumber] ; x++) {
         if (this.enemiesToSpawn > 0) {
             this.newTicks = createjs.Ticker.getTicks();
             if (this.newTicks - this.oldTicks >= 60) {
@@ -85,8 +89,31 @@ Stage2.prototype.spawnEnemies = function () {
     }
 };
 
+Stage2.prototype.returnEnemyType = function (area, wave) {
+    switch (wave) {
+        case 0:
+            return new Enemy(cellWidth * 9, 0, area, 1, 10);
+            break;
+        case 1:
+            return new Enemy(cellWidth * 9, 0, area);
+            break;
+        case 2:
+            return new Enemy(cellWidth * 9, 0, area, 2, 200, "imgMonster2");
+            break;
+        case 3:
+            return new Enemy(cellWidth * 9, 0, area, 2, 200, "imgMonster2");
+            break;
+        case 4:
+            return new Enemy(cellWidth * 9, 0, area, 1, 2000, "imgMonster3");
+            break;
+        default:
+            return new Enemy(cellWidth * 9, 0, area);
+            break;
+    }
+};
+
 Stage2.prototype.spawnEnemyOnPath = function (path) {    
-    var enemy = new Enemy(cellWidth * 9, 0, path);
+    var enemy = this.returnEnemyType(path, waveNumber);
     stage.addChild(enemy);
     enemies.push(enemy);
     this.oldTicks = this.newTicks;

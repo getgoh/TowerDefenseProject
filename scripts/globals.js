@@ -28,6 +28,7 @@ var rewardTime = 1000;
 var time;
 
 // game object collections
+var waveNumber = 0;
 var enemies = [];
 var towers = [];
 var bullets = [];
@@ -76,7 +77,8 @@ var shouldPlayThemeMusic = true;
 var themeMusicCtr;
 
 //stage information
-var enemyCount = 10;
+
+var enemyCounts = [8, 10, 8, 10, 1, 0];
 var currState = null;
 var didStart = false;
 

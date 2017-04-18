@@ -14,7 +14,7 @@ Stage1.prototype.initialize = function()
 	this.drawMap();
 	this.spawnEnemies();
 	this.oldTicks = createjs.Ticker.getTicks();
-	this.enemiesToSpawn = enemyCount;
+	this.enemiesToSpawn = enemyCounts[waveNumber];
 	// reward = new Reward();
 }
 
@@ -30,7 +30,7 @@ Stage1.prototype.setCanvasSize = function()
 Stage1.prototype.update = function ()
 {
     this.spawnEnemies();
-    // this.checkForWin();
+    this.checkForWin();
 
     // enemies
     for(var x = 0; x < enemies.length; x++)
@@ -63,13 +63,21 @@ Stage1.prototype.checkForWin = function ()
 			testgameover("You lose!");
 			didStart = false;
 		}
-		else if(enemies.length == 0)
+		else if(enemies.length == 0 && this.enemiesToSpawn == 0)
 		{
-			// show win message, then stop the game, or start next game, retaining life and money?
-			testgameover("You win!");
+		    // show win message, then stop the game, or start next game, retaining life and money?
+		    waveNumber++;
+		    this.enemiesToSpawn = enemyCounts[waveNumber];
+		    if(this.enemiesToSpawn == 0) {
+		        testgameover("You win!");
+		    }
 			didStart = false;
 		}		
 	}
+}
+
+Stage1.prototype.getNumEnemies = function(wave) {
+
 }
 
 var ttm = false;
@@ -93,7 +101,7 @@ Stage1.prototype.spawnEnemies = function ()
 		{ x: 528, y: 288 },
 		{ x: 528, y: 48 }];
 
-    //for (var x = 1; x <= enemyCount ; x++) {
+    //for (var x = 1; x <= enemyCounts[waveNumber] ; x++) {
     //    var enemy = new Enemy((x * (-72)), cellWidth, area);
     //    enemies.push(enemy);
     //    console.log(enemy)
@@ -103,7 +111,7 @@ Stage1.prototype.spawnEnemies = function ()
     if (this.enemiesToSpawn > 0) {
         this.newTicks = createjs.Ticker.getTicks();
         if (this.newTicks - this.oldTicks >= 60) {
-            var enemy = new Enemy(0, cellWidth, area);
+            var enemy = this.returnEnemyType(area, waveNumber);
             stage.addChild(enemy);
             enemies.push(enemy);
             this.oldTicks = this.newTicks;
@@ -112,6 +120,29 @@ Stage1.prototype.spawnEnemies = function ()
 
     		didStart = true;
         }
+    }
+};
+
+Stage1.prototype.returnEnemyType = function (area, wave) {
+    switch (wave) {
+        case 0:
+            return new Enemy(0, cellWidth, area);
+            break;
+        case 1:
+            return new Enemy(0, cellWidth, area);
+            break;
+        case 2:
+            return new Enemy(0, cellWidth, area, 2, 200, "imgMonster2");
+            break;
+        case 3:
+            return new Enemy(0, cellWidth, area, 2, 200, "imgMonster2");
+            break;
+        case 4:
+            return new Enemy(0, cellWidth, area, 1, 2000, "imgMonster3");
+            break;
+        default:
+            return new Enemy(0, cellWidth, area);
+            break;
     }
 };
 

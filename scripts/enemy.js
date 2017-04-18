@@ -1,16 +1,21 @@
 
 (function(){
-
-	var Enemy = function(startX, startY, pathArea)
+    
+	var Enemy = function(startX, startY, pathArea, speed, health, imgString)
 	{
+	    if (typeof (speed) === 'undefined') speed = 1;
+	    if (typeof (health) === 'undefined') health = 100;
+	    if (typeof (imgString) === 'undefined') imgString = "imgMonster1";
+
 		this.Bitmap_constructor();
 		this.x = startX;
 		this.y = startY;
-		this.speed = 1;
-		this.maxHealth = this.health = 100;
+		this.speed = speed;
+		this.maxHealth = this.health = health;
 		this.currDest = 0;
 		this.creditValue = 20;
 		this.barSize = 1;
+		this.image = queue.getResult(imgString);
 
 		this.initialize(pathArea);
 	}
@@ -35,8 +40,6 @@
 
 	en.drawEnemy = function()
 	{
-		this.image = queue.getResult("imgMonster1");
-
 		// health bar stuff
 		this.healthBar = new createjs.Shape();
 		this.healthBarBG = new createjs.Shape();
@@ -103,7 +106,6 @@
 	    }
 		
 		stage.removeChild(this, this.healthBar, this.healthBarBG);
-		// give money!
 	}
 
 	en.hitTest = function(hitX, hitY)
