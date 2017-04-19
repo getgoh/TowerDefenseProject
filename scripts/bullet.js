@@ -64,11 +64,17 @@
 		{
 			console.log("EH:" + this.enemy.health + ", DAM:" + this.damage);
 			this.enemy.takeDamage(this.damage);
+
+			// effects woot woot
+			if(this.bulletInfo.effect)
+			{
+				console.log("Bullet eff:" + this.bulletInfo.effect );
+				this.enemy.applyEffect(this.bulletInfo.effect);
+			}
+
 			if(this.enemy.health <= 0)
 			{
-			    this.enemy.kill();
-			    // add credits
-			    addCredit(this.enemy.creditValue);
+			    this.enemy.kill(true);
 			}
 
 			var index = bullets.indexOf(this);

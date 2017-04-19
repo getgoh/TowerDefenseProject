@@ -3,6 +3,10 @@ function themeMusicStart()
 	// initial start of theme music, while
 	// assigning returned AbstractSoundInstance to themeMusicCtr
 	themeMusicCtr = createjs.Sound.play("theme", { interrupt: createjs.Sound.INTERRUPT_NONE, loop: -1});
+	if(!shouldPlayThemeMusic)
+	{
+		themeMusicCtr.stop();
+	}
 }
 
 function themeMusicForStage(stage)

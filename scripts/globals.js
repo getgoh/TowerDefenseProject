@@ -59,7 +59,7 @@ var path2 = [
 //used in menutower.js
 var _tower;
 
-var menuTower1, menuTower2;
+var menuTower1, menuTower2, menuTower3, menuTower4;
 
 // Player currency
 var credit = 300;
@@ -76,11 +76,11 @@ var loadingBarContainer;
 var loadingBar;
 
 // music toggle
-var shouldPlayThemeMusic = true;
+var shouldPlayThemeMusic = false;
 var themeMusicCtr;
 
 // sound effect toggle
-var shouldPlaySoundEffect = true;
+var shouldPlaySoundEffect = false;
 
 //stage information
 
@@ -95,7 +95,8 @@ var currTower = null;
 var TowersEnum = {
 	BASIC : 1,
 	ADVANCED : 2,
-	ULTIMATE : 3
+	ULTIMATE : 3,
+	ICE_TOWER : 4
 };
 
 var TowerInfo, BulletInfo;
@@ -117,6 +118,11 @@ function setupTowerInfo()
 		ULTIMATE : {
 			color: "#000000",
 			size: 5
+		},
+		ICE_TOWER : {
+			color: "#244e91",
+			size: 4,
+			effect: "slow"
 		}
 	};
 
@@ -140,10 +146,18 @@ function setupTowerInfo()
 		ULTIMATE : {
 			rateOfFire : 80,
 			fireRange : 200,
-			price : 120,
-			power : 30,
+			price : 150,
+			power : 25,
 			bullet : BulletInfo.ULTIMATE,
 			img : queue.getResult("imgt3")
+		},
+		ICE_TOWER : {
+			rateOfFire : 60,
+			fireRange : 100,
+			price : 250,
+			power : 5,
+			bullet : BulletInfo.ICE_TOWER,
+			img : queue.getResult("imgIceTower")
 		}
 	};
 }

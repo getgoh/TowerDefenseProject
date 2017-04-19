@@ -36,6 +36,8 @@
 	        case TowersEnum.ULTIMATE:
 	            this.towerInfo = TowerInfo.ULTIMATE;
 	            break;
+	        case TowersEnum.ICE_TOWER:
+	        	this.towerInfo = TowerInfo.ICE_TOWER;
 	    }
 
 	    this.image = 		this.towerInfo.img;

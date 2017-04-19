@@ -10,12 +10,13 @@
 		this.Bitmap_constructor();
 		this.x = startX;
 		this.y = startY;
-		this.speed = speed;
+		this.speed = this.initSpeed = speed;
 		this.maxHealth = this.health = health;
 		this.currDest = 0;
 		this.creditValue = 20;
 		this.barSize = 1;
 		this.image = queue.getResult(imgString);
+		this.effect = null;
 
 		this.initialize(pathArea);
 	}
@@ -56,6 +57,32 @@
 
 	en.move = function()
 	{
+		if(this.effect)
+		{
+			console.log("effect: " + this.effect);
+			switch(this.effect)
+			{
+				case "slow":
+					var newTick = createjs.Ticker.getTicks();
+					if(newTick - this.effectTick <= 200)
+					{
+						var color = new createjs.ColorFilter(0, 0, 1, 1, 0, 0, 0, 0);
+				        this.filters = [color];
+				        this.cache(0, 0, 48 + 10, 48 + 10);
+						this.speed = this.initSpeed * 0.5;
+					}
+					else
+					{
+						this.speed = this.initSpeed;
+						this.filters = [];
+						this.cache(0, 0, 48+10, 48+10);
+						this.effectTick = newTick;
+						this.effect = null;
+					}
+				break;
+			}
+		}
+
 		// console.log("x:" + this.x + ", y:" + this.y);
 		isPositiveX = (this.destinations[this.currDest].x - this.x) > 0 ? true : false;
 		isPositiveY = (this.destinations[this.currDest].y - this.y) > 0 ? true : false;
@@ -77,7 +104,11 @@
 		this.healthBar.y = this.healthBarBG.y = this.y - 5;
 
 
-		if(this.x == this.destinations[this.currDest].x && this.y == this.destinations[this.currDest].y)
+		var xDist = this.destinations[this.currDest].x - this.x;
+		var yDist = this.destinations[this.currDest].y - this.y;
+		var dist = Math.sqrt(xDist*xDist+yDist*yDist);
+
+		if(dist <= 3)
 		{
 			this.currDest++;
 		}
@@ -89,6 +120,12 @@
 	 		txtLives.text = "Lives: " + lives;
 			this.kill();
 		}
+	}
+
+	en.applyEffect = function(effect)
+	{
+		this.effect = effect;
+		this.effectTick = createjs.Ticker.getTicks();
 	}
 
 	en.takeDamage = function(amount)

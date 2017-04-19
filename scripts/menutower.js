@@ -16,7 +16,39 @@
 	// init function
 	_mt.initialize = function()
 	{
+		this.getTowerInfo();
 	    this.drawMenuTower();
+	}
+
+	_mt.getTowerInfo = function()
+	{
+		this.towerInfo = TowerInfo.BASIC;
+
+		switch (this.type) {
+	        case TowersEnum.BASIC:
+	            this.towerInfo = TowerInfo.BASIC;
+	            this.initX = this.x = 0;
+	            break;
+	        case TowersEnum.ADVANCED:
+	            this.towerInfo = TowerInfo.ADVANCED;
+	            this.initX = this.x = 60;
+	            break;
+	        case TowersEnum.ULTIMATE:
+	            this.towerInfo = TowerInfo.ULTIMATE;
+	            this.initX = this.x = 120;
+	            break;
+            case TowersEnum.ICE_TOWER:
+	            this.towerInfo = TowerInfo.ICE_TOWER;
+	            this.initX = this.x = 180;
+	            break;
+	    }
+
+	    this.image = 		this.towerInfo.img;
+		this.rateOfFire = 	this.towerInfo.rateOfFire;
+		this.fireRange = 	this.towerInfo.fireRange;
+		this.cost = 		this.towerInfo.price;
+		this.power = 		this.towerInfo.power;
+		this.bullet = 		this.towerInfo.bullet;
 	}
 
 	//
@@ -24,26 +56,26 @@
 	{
 		// instantiate menutower depending on current type
 		// TowersEnum defined in globals.js
-	    switch (this.type) {
-	        case TowersEnum.BASIC:
-	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt1"));
-	            this.image = queue.getResult("imgt1");
-				this.initX = this.x = 0;	
-	            this.cost = 100;
-	            break;
-	        case TowersEnum.ADVANCED:
-	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt2"));
-	            this.image = queue.getResult("imgt2");
-	            this.cost = 120;
-				this.initX = this.x = 60;	
-	            break;
-	        case TowersEnum.ULTIMATE:
-	            // this.menuTower = new createjs.Bitmap(queue.getResult("imgt3"));
-	            this.image = queue.getResult("imgt3");
-	            this.cost = 120;
-	            this.initX = this.x = 120;
-	            break;
-	    }
+	   //  switch (this.type) {
+	   //      case TowersEnum.BASIC:
+	   //          // this.menuTower = new createjs.Bitmap(queue.getResult("imgt1"));
+	   //          this.image = queue.getResult("imgt1");
+				// this.initX = this.x = 0;	
+	   //          this.cost = this.;
+	   //          break;
+	   //      case TowersEnum.ADVANCED:
+	   //          // this.menuTower = new createjs.Bitmap(queue.getResult("imgt2"));
+	   //          this.image = queue.getResult("imgt2");
+	   //          this.cost = 120;
+				// this.initX = this.x = 60;	
+	   //          break;
+	   //      case TowersEnum.ULTIMATE:
+	   //          // this.menuTower = new createjs.Bitmap(queue.getResult("imgt3"));
+	   //          this.image = queue.getResult("imgt3");
+	   //          this.cost = 120;
+	   //          this.initX = this.x = 120;
+	   //          break;
+	   //  }
 
 	    this.towerCost = new createjs.Text(this.cost, "10px Arial");
 	    this.towerCost.textAlign = 'center';
