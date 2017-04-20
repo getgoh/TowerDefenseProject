@@ -106,7 +106,7 @@ function setupStageInfo()
 	StageInfo = {
 		Stage1 : {
 			startX : 0,
-			startY = 48
+			startY : 48
 		}
 	};
 }
