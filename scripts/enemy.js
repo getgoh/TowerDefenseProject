@@ -17,6 +17,7 @@
 		this.barSize = 1;
 		this.image = queue.getResult(imgString);
 		this.effect = null;
+		this.isAlive = true;
 
 		this.initialize(pathArea);
 	}
@@ -59,7 +60,7 @@
 	{
 		if(this.effect)
 		{
-			console.log("effect: " + this.effect);
+			// console.log("effect: " + this.effect);
 			switch(this.effect)
 			{
 				case "slow":
@@ -128,10 +129,10 @@
 		this.effectTick = createjs.Ticker.getTicks();
 	}
 
-	en.takeDamage = function(amount)
+	en.takeDamage = function(damage)
 	{
-		this.health -= amount;
-		this.barSize -= amount / this.maxHealth;;
+		this.health -= damage;
+		this.barSize -= damage / this.maxHealth;;
 		this.healthBar.scaleX = this.barSize;
 	}
 
@@ -140,6 +141,12 @@
 	    var index = enemies.indexOf(this);
 	    if (index > -1) {
 	        enemies.splice(index, 1);
+		    addCredit(this.creditValue);
+		    this.isAlive = false;
+	    }
+	    else
+	    {
+	    	console.log("ELSE");
 	    }
 		
 		stage.removeChild(this, this.healthBar, this.healthBarBG);

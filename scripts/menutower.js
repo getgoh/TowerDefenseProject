@@ -89,6 +89,7 @@
 	    _mt.placeHelper.graphics.drawRect(0, 0, 48, 48);
 	    _mt.placeHelper.alpha = 0.01;
 
+	    this.createRangeCircle();
 
 	    // preview when dragging the tower
 	    // _mt.previewTower = new createjs.Bitmap(this.image);
@@ -104,12 +105,23 @@
 	    stage.addChild(_mt.placeHelper, this.towerCost);
 	}
 
+	_mt.createRangeCircle = function () 
+	{
+	    this._rangeCircle = new createjs.Shape();
+	    this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(0, 0, this.fireRange); //.beginStroke("rgba(255,255,255,1)")
+	    this._rangeCircle.alpha = 0;
+	    stage.addChild(this._rangeCircle);
+	}
+
 	_mt.onMouseDown = function()
 	{
 		console.log("CLICK");
 		_mt.placeHelper.x = this.x;
 		_mt.placeHelper.y = this.y;
 		_mt.placeHelper.alpha = 0.6;
+		this._rangeCircle.alpha = 1;
+		this._rangeCircle.x = this.x + 24;
+		this._rangeCircle.y = this.y + 24;
 	}
 
 	_mt.onDragged = function(ev)
@@ -127,6 +139,9 @@
 
 		this.x = _mt.placeHelper.x = this.x0;
 		this.y = _mt.placeHelper.y = this.y0;
+
+		this._rangeCircle.x = this.x + 24;
+		this._rangeCircle.y = this.y + 24;
 
 		// placement guide
 		// green = can place
@@ -156,7 +171,7 @@
 	_mt.checkLocation = function(row, col)
 	{
 	    if (currState === stage1) {
-	        console.log("s1" + row);
+	        // console.log("s1" + row);
 	        if (stage1.gameTable[row][col] != 0) {
 	            return false;
 	        }
@@ -181,6 +196,9 @@
 
 		this.placeHelper.alpha = 0;
 		this.placeHelper.x = -200;
+
+
+		this._rangeCircle.alpha = 0;
 
 		// out of bounds
 		if(this.iy >= 10 || this.ix >= 20)

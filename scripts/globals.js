@@ -99,6 +99,18 @@ var TowersEnum = {
 	ICE_TOWER : 4
 };
 
+var StageInfo;
+
+function setupStageInfo()
+{
+	StageInfo = {
+		Stage1 : {
+			startX : 0,
+			startY = 48
+		}
+	};
+}
+
 var TowerInfo, BulletInfo;
 
 // need to put this inside function because we need

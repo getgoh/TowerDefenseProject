@@ -60,20 +60,18 @@
 	    //console.log("thisY" + thisY);
         
 	    if(this.enemy && dist < 5)
-		//if(this.enemy.hitTest(thisX, thisY))
 		{
-			console.log("EH:" + this.enemy.health + ", DAM:" + this.damage);
 			this.enemy.takeDamage(this.damage);
 
 			// effects woot woot
 			if(this.bulletInfo.effect)
 			{
-				console.log("Bullet eff:" + this.bulletInfo.effect );
 				this.enemy.applyEffect(this.bulletInfo.effect);
 			}
 
-			if(this.enemy.health <= 0)
+			if(this.enemy.health <= 0 && this.enemy.health != -9999)
 			{
+				this.enemy.health = -9999;
 			    this.enemy.kill(true);
 			}
 
