@@ -159,7 +159,7 @@ function gameOverMenu()
 
         pauseToggle();
         waveNumber = 0; 
-        score = 300;
+        score = credit = 300;
         lives = 5;
         if(currState === stage1)
         {

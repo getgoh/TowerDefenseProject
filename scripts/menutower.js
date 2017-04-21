@@ -126,6 +126,11 @@
 		this._rangeCircle.alpha = 1;
 		this._rangeCircle.x = this.x + 24;
 		this._rangeCircle.y = this.y + 24;
+
+		if(currTower != null)
+		{
+			currTower.showRangeCircle();
+		}
 	}
 
 	_mt.onDragged = function(ev)
@@ -225,6 +230,7 @@
 		// if above conditions are met, place tower
 			var newTower = new Tower(this.x0, this.y0, this.type);
 			stage.addChild(newTower);
+			stage.setChildIndex(newTower, 5);
 
 			// mark position as "1" for "tower"
 			if (stage1) {

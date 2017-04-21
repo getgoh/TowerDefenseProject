@@ -143,6 +143,13 @@ Stage1.prototype.spawnEnemies = function ()
         if (this.newTicks - this.oldTicks >= 60) {
             var enemy = this.returnEnemyType(area, waveNumber);
             stage.addChild(enemy);
+            for(var tow=0;
+            	tow<towers.length;
+            	tow++)
+            {
+            	stage.setChildIndex( towers[tow]._boxInfo, stage.getNumChildren()-1);
+            }
+            stage.setChildIndex(enemy, 500);
             enemies.push(enemy);
             this.oldTicks = this.newTicks;
 

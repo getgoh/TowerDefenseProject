@@ -55,8 +55,77 @@
 	_t.drawTower = function()
 	{
 		this.createRangeCircle();
+		this.createBoxInfo();
 
-		this.on("click", this.showRangeCircle);
+		this.on("click", this.onTowerClick);
+	}
+
+	_t.createRangeCircle = function () 
+	{
+	    this._rangeCircle = new createjs.Shape();
+	    this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x + 24, this.y + 24, this.getFireRange()); //.beginStroke("rgba(255,255,255,1)")
+	    this._rangeCircle.alpha = 0;
+	    stage.addChild(this._rangeCircle);
+	}
+
+	_t.createBoxInfo = function()
+	{
+		this._boxInfo = new createjs.Container();
+		this._boxInfoBG = new createjs.Shape();
+		this._boxInfoBG.graphics.beginStroke("#000").beginFill("#ffffff").drawRect(0, 0, 70, 60);
+		this._boxInfoBG.alpha = 0.8;
+		this._boxInfo.x = this.x - 12;
+		this._boxInfo.y = this.y + 50;
+		this._boxInfo.alpha = 0;
+
+		// damage text
+		this._txtDamage = new createjs.Text("Damage: " + this.power, "Arial 10px", "#0018f7");
+		this._txtSpeed = new createjs.Text("Speed: " + this.rateOfFire, "Arial 10px", "#0018f7");
+
+		// speed text
+		this._txtDamage.x = this._txtSpeed.x = 8;
+		this._txtSpeed.y = this._txtDamage.y + 10;
+
+		// sell button
+		this.txt = new createjs.Text("Sell: " + (this.price * 0.5));
+        this.btn = new createjs.Shape();
+        this.btn.graphics.beginStroke("#000");
+        this.btn.graphics.beginFill("#CCC");
+        this.btn.graphics.drawRect(0,0,50,25);
+        this.btn.x = 8;
+        this.btn.y = this._txtSpeed.y + 15;
+        this.btn.price = this.price;
+        this.btn.parentTower = this;
+        stage.addChild(this.btn);
+        this.txt.textAlign = 'center';
+        this.txt.textBaseline = 'middle';
+        this.txt.x = 28;
+        this.txt.y = this._txtSpeed.y + 26;
+
+
+        this.btn.on("click", this.sellTower);
+
+		this._boxInfo.addChild(this._boxInfoBG, this._txtDamage, this._txtSpeed, this.btn, this.txt);
+		stage.addChild(this._boxInfo);
+	}
+
+	_t.sellTower = function()
+	{
+		console.log(this.parentTower);
+		var index = towers.indexOf(this.parentTower);
+		if(index >= -1)
+		{
+			this.parentTower.removeChildren();
+			stage.removeChild(this.parentTower);
+			towers.splice(index, 1);
+			credit += this.parentTower.price * 0.5;
+			creditTxt.text = "Credits: " + credit;
+		}
+	}
+
+	_t.removeChildren = function()
+	{
+		stage.removeChild(this._rangeCircle, this._boxInfo);
 	}
 
 	_t.checkIfInRange = function(pEnemy)
@@ -87,10 +156,8 @@
 	    }
 	    else
 	    {
-	    	if(this.towerType == TowersEnum.CHARGE_TOWER)
-	    	{
-	    		this.power = 1;
-	    	}
+	    	// for charge towers
+	    	this.resetDamage();
 
 	        this.hasTarget = false;
 	        this.target = null;
@@ -106,6 +173,17 @@
 		//    // console.log("enemy NOT in range: " + pEnemy);
 		//    this.hasTarget = false;
 		//}
+	}
+
+	_t.resetDamage = function()
+	{
+		this.power = this.towerType == TowersEnum.CHARGE_TOWER ? 1 : this.power;
+	}
+
+	_t.setDamage = function()
+	{
+		this.power = this.towerType == TowersEnum.CHARGE_TOWER ? this.power + 1 : this.power;	
+		this._txtDamage.text = "Damage: " + this.power;
 	}
 
 	var tt = true;
@@ -136,11 +214,8 @@
 				stage.addChild(bullet);
 				bullets.push(bullet);
 
-				if(this.towerType == TowersEnum.CHARGE_TOWER)
-				{
-					this.power += 1.5;
-					console.log("Damage: " + this.power);
-				}
+				// for charge towers
+				this.setDamage();
 
 				this.oldTicks = this.newTicks;
 			}
@@ -150,10 +225,8 @@
 		{
 			// console.log("no target");
 			this.hasTarget = false;
-			if(this.towerType == TowersEnum.CHARGE_TOWER)
-	    	{
-	    		this.power = 1;
-	    	}
+			// for charge towers
+			this.resetDamage();
 		}
 	}
 
@@ -184,6 +257,25 @@
 	    }
 	}
 
+	_t.onTowerClick = function()
+	{
+		this.showRangeCircle();
+	}
+
+	_t.infoBoxToggle = function(off)
+	{
+		if(off)
+		{
+			this._boxInfo.alpha = 0;
+		}
+		else
+		{
+			this._boxInfo.alpha = this._boxInfo.alpha == 1 ? 0 : 1;
+		}
+		// stage.setChildIndex( this._boxInfo, stage.getNumChildren()-1);
+		// stage.setChildIndex(this._boxInfo, 999);
+	}
+
 	_t.showRangeCircle = function()
 	{
 		if(currTower != null)
@@ -198,28 +290,26 @@
 			    {
 			        this._rangeCircle.alpha = 1
 			    }
+			    this.infoBoxToggle(false);
 			}
 			else
 			{
 				currTower._rangeCircle.alpha = 0;
+				currTower.infoBoxToggle(true);
 				currTower = this;
 				this._rangeCircle.alpha = 1;
+				this.infoBoxToggle(false);
 			}
 		}		
 		else
 		{
 			currTower = this;
 			this._rangeCircle.alpha = 1;
+			this.infoBoxToggle(false);
 		}
 	}
 
-	_t.createRangeCircle = function () 
-	{
-	    this._rangeCircle = new createjs.Shape();
-	    this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x + 24, this.y + 24, this.getFireRange()); //.beginStroke("rgba(255,255,255,1)")
-	    this._rangeCircle.alpha = 0;
-	    stage.addChild(this._rangeCircle);
-	}
+	
 
 	_t.getFireRange = function()
 	{
