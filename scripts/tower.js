@@ -138,7 +138,7 @@
 
 				if(this.towerType == TowersEnum.CHARGE_TOWER)
 				{
-					this.power += 1;
+					this.power += 1.5;
 					console.log("Damage: " + this.power);
 				}
 
