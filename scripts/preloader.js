@@ -71,6 +71,7 @@
             { id: "imgt2", src: "images/t2.png" },
             { id: "imgt3", src: "images/t3.png" },
             { id: "imgIceTower", src: "images/imgIceTower.png" },
+            { id: "imgChargeTower", src: "images/imgChargeTower.png" },
             { id: "imgMoney", src: "images/money-bag.png" },
             { id: "imgMonster1", src: "images/monster1-new.png" },
             { id: "imgMonster2", src: "images/monster2.png" },

@@ -38,6 +38,10 @@
 	            break;
 	        case TowersEnum.ICE_TOWER:
 	        	this.towerInfo = TowerInfo.ICE_TOWER;
+	        	break;
+        	case TowersEnum.CHARGE_TOWER:
+	        	this.towerInfo = TowerInfo.CHARGE_TOWER;
+	        	break;
 	    }
 
 	    this.image = 		this.towerInfo.img;
@@ -83,6 +87,11 @@
 	    }
 	    else
 	    {
+	    	if(this.towerType == TowersEnum.CHARGE_TOWER)
+	    	{
+	    		this.power = 1;
+	    	}
+
 	        this.hasTarget = false;
 	        this.target = null;
 	    }
@@ -121,10 +130,17 @@
 
 				// console.log("tower: " + this.x + ", " + this.y);
 
-				// produce bullet, then add to bullets[] array				
+				// produce bullet, then add to bullets[] array
+
 				var bullet = new Bullet(this.x + 24, this.y + 24, enemy, this.power, this.bullet);
 				stage.addChild(bullet);
 				bullets.push(bullet);
+
+				if(this.towerType == TowersEnum.CHARGE_TOWER)
+				{
+					this.power += 1;
+					console.log("Damage: " + this.power);
+				}
 
 				this.oldTicks = this.newTicks;
 			}
@@ -134,6 +150,10 @@
 		{
 			// console.log("no target");
 			this.hasTarget = false;
+			if(this.towerType == TowersEnum.CHARGE_TOWER)
+	    	{
+	    		this.power = 1;
+	    	}
 		}
 	}
 

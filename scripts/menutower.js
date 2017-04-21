@@ -41,6 +41,10 @@
 	            this.towerInfo = TowerInfo.ICE_TOWER;
 	            this.initX = this.x = 180;
 	            break;
+            case TowersEnum.CHARGE_TOWER:
+	            this.towerInfo = TowerInfo.CHARGE_TOWER;
+	            this.initX = this.x = 240;
+	            break;
 	    }
 
 	    this.image = 		this.towerInfo.img;
