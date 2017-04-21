@@ -29,6 +29,7 @@ var time;
 
 // game object collections
 var waveNumber = 0;
+var txtWaves;
 var enemies = [];
 var towers = [];
 var bullets = [];

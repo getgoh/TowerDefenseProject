@@ -115,6 +115,12 @@
 		var index = towers.indexOf(this.parentTower);
 		if(index >= -1)
 		{
+			var ix = Math.floor(this.parentTower.x / 48);
+			var iy = Math.floor(this.parentTower.y / 48);
+			console.log(ix + ",, " + iy);
+
+		    currState.gameTable[iy][ix] = 0;
+
 			this.parentTower.removeChildren();
 			stage.removeChild(this.parentTower);
 			towers.splice(index, 1);
@@ -259,7 +265,7 @@
 
 	_t.onTowerClick = function()
 	{
-		this.showRangeCircle();
+		this.showRangeCircle(false);
 	}
 
 	_t.infoBoxToggle = function(off)
@@ -276,8 +282,15 @@
 		// stage.setChildIndex(this._boxInfo, 999);
 	}
 
-	_t.showRangeCircle = function()
+	_t.showRangeCircle = function(justClose)
 	{
+		if(justClose)
+		{
+	        this._rangeCircle.alpha = 0;
+			this.infoBoxToggle(true);
+			return;
+		}
+
 		if(currTower != null)
 		{
 			if(currTower === this)

@@ -14,9 +14,13 @@ Stage1.prototype.initialize = function()
 	this.drawMap();
 	this.spawnEnemies();
 	this.oldTicks = createjs.Ticker.getTicks();
-	this.enemiesToSpawn = enemyCounts[waveNumber];
+	this.enemiesToSpawnInit = this.enemiesToSpawn = enemyCounts[waveNumber];
 	this.tickStamp = createjs.Ticker.getTicks();
 	reward = new Reward();
+
+	// temp for endless
+	this.initSpeed = 1;
+	this.initHP = 100;
 
 	// music
 	themeMusicForStage();
@@ -86,7 +90,15 @@ Stage1.prototype.checkForWin = function ()
 		{
 		    // show win message, then stop the game, or start next game, retaining life and money?
 		    waveNumber++;
-		    this.enemiesToSpawn = enemyCounts[waveNumber];
+		    txtWaves.text = "Wave: " + (waveNumber + 1);
+		    // this.enemiesToSpawn = enemyCounts[waveNumber];
+		    this.enemiesToSpawnInit++;
+		    if(this.initSpeed < 2)
+		    {
+		    	this.initSpeed += 0.1;
+		    }
+		    this.initHP += 20;
+		    this.enemiesToSpawn = this.enemiesToSpawnInit;
 		    if(this.enemiesToSpawn == 0) {
 		    	
 	            enemies = [];
@@ -136,20 +148,19 @@ Stage1.prototype.spawnEnemies = function ()
     if (this.enemiesToSpawn > 0) {
 
     	this.newTicks = createjs.Ticker.getTicks();
-
-    	// console.log("Newticks: " + this.newTicks + ", Oldticks: " + this.oldTicks);
-
         
         if (this.newTicks - this.oldTicks >= 60) {
-            var enemy = this.returnEnemyType(area, waveNumber);
+
+            // var enemy = this.returnEnemyType(area, waveNumber);
+            var enemy = new Enemy(0, cellWidth, area, this.initSpeed, this.initHP, "imgMonster1");
             stage.addChild(enemy);
-            for(var tow=0;
-            	tow<towers.length;
-            	tow++)
+
+            // always set the boxinfo of towers on top of everything
+            for(var tow=0;tow<towers.length;tow++)
             {
             	stage.setChildIndex( towers[tow]._boxInfo, stage.getNumChildren()-1);
             }
-            stage.setChildIndex(enemy, 500);
+
             enemies.push(enemy);
             this.oldTicks = this.newTicks;
 
@@ -158,6 +169,10 @@ Stage1.prototype.spawnEnemies = function ()
     		didStart = true;
         }
     }
+    // else
+    // {
+    // 	this.waveTicker = 
+    // }
 };
 
 Stage1.prototype.returnEnemyType = function (area, wave) {

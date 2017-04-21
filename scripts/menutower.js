@@ -129,7 +129,7 @@
 
 		if(currTower != null)
 		{
-			currTower.showRangeCircle();
+			currTower.showRangeCircle(true);
 		}
 	}
 
@@ -179,20 +179,25 @@
 
 	_mt.checkLocation = function(row, col)
 	{
-	    if (currState === stage1) {
-	        // console.log("s1" + row);
-	        if (stage1.gameTable[row][col] != 0) {
-	            return false;
-	        }
-	        return true;
-	    }
-	    else if (currState === stage2) {
-	        console.log("s2" + row);
-	        if (stage2.gameTable[row][col] != 0) {
-	            return false;
-	        }
-	        return true;
-	    }
+		if(currState.gameTable[row][col] != 0)
+		{
+			return false
+		}
+		return true;
+	    // if (currState === stage1) {
+	    //     // console.log("s1" + row);
+	    //     if (stage1.gameTable[row][col] != 0) {
+	    //         return false;
+	    //     }
+	    //     return true;
+	    // }
+	    // else if (currState === stage2) {
+	    //     console.log("s2" + row);
+	    //     if (stage2.gameTable[row][col] != 0) {
+	    //         return false;
+	    //     }
+	    //     return true;
+	    // }
 	}
 
 	_mt.onRelease = function()
@@ -233,12 +238,13 @@
 			stage.setChildIndex(newTower, 5);
 
 			// mark position as "1" for "tower"
-			if (stage1) {
-			    stage1.gameTable[this.iy][this.ix] = 1;
-			}
-			if (stage2) {
-			    stage2.gameTable[this.iy][this.ix] = 1;
-			}
+			currState.gameTable[this.iy][this.ix] = 1;
+			// if (currState === stage1) {
+			//     stage1.gameTable[this.iy][this.ix] = 1;
+			// }
+			// if (currState === stage2) {
+			//     stage2.gameTable[this.iy][this.ix] = 1;
+			// }
 
 			towers.push(newTower);
 
