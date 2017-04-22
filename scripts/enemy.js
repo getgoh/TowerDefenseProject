@@ -20,6 +20,7 @@
 		this.isAlive = true;
 
 		this.fireBG = null;
+		this.fireMod = 1;
 
 		this.initialize(pathArea);
 	}
@@ -99,11 +100,25 @@
 							this.fireBG.x = this.x;
 							this.fireBG.y = this.y;
 
+							// fire animation
+							if(diff%30 == 0)
+							{
+								console.log("DO ANIMATION: " + this.fireMod%2);
+								if(this.fireMod%2 == 0)
+								{
+									this.fireBG.image = queue.getResult("imgFireBG2");
+								}
+								else
+								{	
+									this.fireBG.image = queue.getResult("imgFireBG");
+								}
+								this.fireMod++;
+							}
+
 							// damage per second
 							if(diff%60 == 0)
 							{
 								// 4% damage per second
-
 								this.takeDamage(this.maxHealth * 0.04);
 							}
 						}
@@ -163,12 +178,19 @@
 
 	en.applyEffect = function(effect)
 	{
-		this.effects.push(effect);
+		// check first if "effect" is not already in effect
+		if(this.effects.indexOf(effect) < 0)
+		{
+			this.effects.push(effect);	
+		}
+
+
 		this.effectTick = createjs.Ticker.getTicks();
 
 		if(effect == "burn")
 		{
 			this.burnTick = createjs.Ticker.getTicks();
+			// this.fireMod = 1;
 		}
 	}
 
