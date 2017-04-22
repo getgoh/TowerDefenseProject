@@ -60,7 +60,7 @@ var path2 = [
 //used in menutower.js
 var _tower;
 
-var menuTower1, menuTower2, menuTower3, menuTower4, menuTower5;
+var menuTower1, menuTower2, menuTower3, menuTower4, menuTower5, menuTower6;
 
 // Player currency
 var credit = 300;
@@ -98,7 +98,8 @@ var TowersEnum = {
 	ADVANCED : 2,
 	ULTIMATE : 3,
 	ICE_TOWER : 4,
-	CHARGE_TOWER : 5
+	CHARGE_TOWER : 5,
+	FIRE_TOWER : 6
 };
 
 var StageInfo;
@@ -141,6 +142,11 @@ function setupTowerInfo()
 		CHARGE_TOWER : {
 			color: "#000000",
 			size: 2
+		},
+		FIRE_TOWER : {
+			color: "#b70101",
+			size: 5,
+			effect: "burn"
 		}
 	};
 
@@ -184,6 +190,14 @@ function setupTowerInfo()
 			power : 1,
 			bullet : BulletInfo.CHARGE_TOWER,
 			img : queue.getResult("imgChargeTower")
+		},
+		FIRE_TOWER : {
+			rateOfFire : 100,
+			fireRange : 100,
+			price : 250,
+			power : 1,
+			bullet : BulletInfo.FIRE_TOWER,
+			img : queue.getResult("imgFireTower")
 		}
 	};
 }

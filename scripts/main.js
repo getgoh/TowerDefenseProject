@@ -30,8 +30,9 @@ function drawDashboard()
     menuTower3 = new MenuTower(TowersEnum.ULTIMATE);
     menuTower4 = new MenuTower(TowersEnum.ICE_TOWER);
     menuTower5 = new MenuTower(TowersEnum.CHARGE_TOWER);
+    menuTower6 = new MenuTower(TowersEnum.FIRE_TOWER);
 
-    stage.addChild(menuTower1, menuTower2, menuTower3, menuTower4, menuTower5);
+    stage.addChild(menuTower1, menuTower2, menuTower3, menuTower4, menuTower5, menuTower6);
 
     // credits
     creditTxt = new createjs.Text("Credits: " + credit, "20px Arial");

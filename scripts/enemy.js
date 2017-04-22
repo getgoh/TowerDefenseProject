@@ -16,8 +16,10 @@
 		this.creditValue = 20;
 		this.barSize = 1;
 		this.image = queue.getResult(imgString);
-		this.effect = null;
+		this.effects = [];
 		this.isAlive = true;
+
+		this.fireBG = null;
 
 		this.initialize(pathArea);
 	}
@@ -58,30 +60,66 @@
 
 	en.move = function()
 	{
-		if(this.effect)
+		if(this.effects.length > 0)
 		{
-			// console.log("effect: " + this.effect);
-			switch(this.effect)
+			for(var eff = 0; eff < this.effects.length; eff++)
 			{
-				case "slow":
-					var newTick = createjs.Ticker.getTicks();
-					if(newTick - this.effectTick <= 200)
-					{
-						var color = new createjs.ColorFilter(0, 0, 1, 1, 0, 0, 0, 0);
-				        this.filters = [color];
-				        this.cache(0, 0, 48 + 10, 48 + 10);
-						this.speed = this.initSpeed * 0.5;
-					}
-					else
-					{
-						this.speed = this.initSpeed;
-						this.filters = [];
-						this.cache(0, 0, 48+10, 48+10);
-						this.effectTick = newTick;
-						this.effect = null;
-					}
-				break;
+				switch(this.effects[eff])
+				{
+					case "slow":
+						var newTick = createjs.Ticker.getTicks();
+						if(newTick - this.effectTick <= 200)
+						{
+							var color = new createjs.ColorFilter(0, 0, 1, 1, 0, 0, 0, 0);
+					        this.filters = [color];
+					        this.cache(0, 0, 48 + 10, 48 + 10);
+							this.speed = this.initSpeed * 0.5;
+						}
+						else
+						{
+							this.speed = this.initSpeed;
+							this.filters = [];
+							this.cache(0, 0, 48+10, 48+10);
+							this.effectTick = newTick;
+							this.effects.splice(this.effects.indexOf(this.effects[eff]), 1);
+						}
+					break;
+					case "burn":
+						var newBurnTick = createjs.Ticker.getTicks();
+						var diff = newBurnTick - this.burnTick;
+						if(diff <= 300)
+						{
+							// visuals
+							if(this.fireBG == null)
+							{
+								this.fireBG = new createjs.Bitmap(queue.getResult("imgFireBG"));
+								this.fireBG.alpha = 0.8;
+								stage.addChild(this.fireBG);
+							}
+							this.fireBG.x = this.x;
+							this.fireBG.y = this.y;
+
+							// damage per second
+							if(diff%60 == 0)
+							{
+								// 4% damage per second
+
+								this.takeDamage(this.maxHealth * 0.04);
+							}
+						}
+						else
+						{
+							stage.removeChild(this.fireBG);
+							this.fireBG = null;
+							this.burnTick = newBurnTick;
+							this.effects.splice(this.effects.indexOf(this.effects[eff]), 1);
+						}
+
+					break;
+				}
 			}
+			// console.log("effect: " + this.effect);
+			
 		}
 
 		// console.log("x:" + this.x + ", y:" + this.y);
@@ -125,8 +163,13 @@
 
 	en.applyEffect = function(effect)
 	{
-		this.effect = effect;
+		this.effects.push(effect);
 		this.effectTick = createjs.Ticker.getTicks();
+
+		if(effect == "burn")
+		{
+			this.burnTick = createjs.Ticker.getTicks();
+		}
 	}
 
 	en.takeDamage = function(damage)
@@ -134,6 +177,12 @@
 		this.health -= damage;
 		this.barSize -= damage / this.maxHealth;;
 		this.healthBar.scaleX = this.barSize;
+
+		if(this.health <= 0 && this.health != -9999)
+		{
+			this.health = -9999;
+		    this.kill(true);
+		}
 	}
 
 	en.kill = function()
@@ -150,6 +199,10 @@
 	    }
 		
 		stage.removeChild(this, this.healthBar, this.healthBarBG);
+		if(this.fireBG != null)
+		{
+			stage.removeChild(this.fireBG);
+		}
 	}
 
 	en.hitTest = function(hitX, hitY)

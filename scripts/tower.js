@@ -42,6 +42,9 @@
         	case TowersEnum.CHARGE_TOWER:
 	        	this.towerInfo = TowerInfo.CHARGE_TOWER;
 	        	break;
+        	case TowersEnum.FIRE_TOWER:
+	        	this.towerInfo = TowerInfo.FIRE_TOWER;
+	        	break;
 	    }
 
 	    this.image = 		this.towerInfo.img;
